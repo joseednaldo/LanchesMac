@@ -1,0 +1,225 @@
+
+#######################
+CURSO UDEMY
+#######################
+launchSettings.json   	= configração do localhost
+appsettings.json  		= arquivo de configração , seria o equivalente ao web.config.
+Program.cs  			=  inicializa a aplicação onde é feita a configuração do host / servidor.
+Startup.cs 				=  configura os servicos... que vai ser usado.
+
+-- OBJETO CO MVC - BAIXO ACOPLAMENTO... 
+MODEL 		-> RESPONSAVEL POR MANTER OS DADOS E A LÓGICA DE NEGOCIO DA APP.
+VIEW 		-> INTERFACE COM O USUARIO DA APP QUE EXIBE OS DADOS.  
+CONTROLLER  -> RECEBE E TRATA AS REQUISIÇÕES(DO BROWSER/USUARIO) E RENDERIZA A VIEW APROPRIADA COM OS DADOS.
+
+
+MODELO DE MVC :
+URL-> não é uma página.
+-No modelo de desenvolvimento MVC uma "URL" corresponde a uma ação de um "controler" e não uma página em disco..
+-No modelo de desenvolvimento MVC  as requisições do navegador (usuário) são mapeadas para "ações" do "CONTROLLER"
+
+EX:
+HTTP://LOCALHOST/HOME/INDEX 
+HOME 	= CONTROLLER
+INDEX 	= ACTION
+
+
+###################FUNCIONAENTO DO PROJETO###############
+
+ARQUIVO:
+Startup: -> função -> ConfigureServico
+
+
+PASTA SHARED  = ARQUIVOS / LAYOUT COMPARTILHADO EX: BARRA DE MENU.
+TAMBÉM OS JS,JQUERY E BOOTSTRAP.
+
+
+projeto.csproj = mostra as dependeças do projeto.
+
+
+##########################################################
+
+MIGRANDO - PARA VERSÃO 3.1 DO CORE.
+
+##########
+MODELO
+##########
+CRIANDO O MODELO DE DOMINIO
+-SÃO AS CLASSES QUE REPRESENTAM A SUA LÓGICA DE NEGÓCIO.
+
+###################################
+	AULA 11 - ENTITY FRAMEWORK CORE
+####################################
+Ferramento que permite ao desenvolvedor trabalhar com dados relacionais na forma de objtos especificos do domonio.
+
+OBJETOS     |   MAPEADOR OBJETO      / BANCO DE DADOS.
+
+
+DBCONTEXT    						  |  DBSET
+REPRESENTA BANCOD DE DADOS			 	TABELAS
+
+LINQ -> DBCONTEXT  -> DBSET
+	    DBCONTEXT  <- DBSET		
+
+AÇÕES: DO ENTITY
+ALTERAR,EXCLUIR E INCLUIR
+
+
+############
+CODE FISRT   /MODELO USAO NO RCI...
+###########
+CRIAMOS AS CLASSES DE DOMINIO E O ENTIRY FRAMEWORK CRIAR O BANCO/TABELAS
+
+
+##############
+DATABASE FISRT
+##############
+PARTIMOS DO BANCO DE DADOS JÁ EXISTENTES E USAMOS O ENTIRY FRAMEWORK CORE OARA GERAR AS CLASSES DE DOMINIO.
+
+		
+######################################################################
+	AULA 12 - CONFIGURANDO O ENTITY FRAMEWORK CORE
+#######################################################################
+ADD PACOTES:
+MICROSOFT.ENTITYFRAMEWORK.CORE 3.1.3.
+MICROSOFT.ENTITYFRAMEWORK.SQLSERVER 3.1.3.
+MICROSOFT.ENTITYFRAMEWORK.TOOLS 3.1.3.
+Microsoft.VisualStudio.Web.CodeGeneration.Design 3.1.3.
+
+
+DBCONTEXT 	=  REPRESENTA A SESSÃO COM O BANDO DE DADOS.
+DBSET 		= REPRESENTA O MAPEAMENTO  PARA A TABELAS DO BANCO DE DADOS.
+
+APPSETTING.JSON  = STRING DE CONEXÃO COM  BANCO DE DADOS.
+
+###
+	REGISTRAR NO ARQUIVO  "STARTUP" O CONTEXTO COMO SERVIÇO.
+###
+EX:
+SERVICES.AddContext<AppDbContext>(
+options = > options.UseSqlserver(Configation.GetConnectionString("DefaultConnection")))
+)
+
+Startup.cs:
+onde configurações a contexto e conectionstring.
+
+
+######################################################################
+	AULA 13 - AJUSTE CONFIGURANDO O ENTITY FRAMEWORK CORE
+#######################################################################
+
+
+######################################################################
+	AULA 14 - USANDO O DATA NOTATION
+#######################################################################
+Recurso usado para validar entrada de dados e também podemos usar 
+com regra de negocio 
+ex: validar cartão de crédito , cpf, email.
+
+
+######################################################################
+	AULA 15- AJUSTO DATA  NOTATION
+#######################################################################
+COLCOAR NAS PROPRIEDADE
+[COLUMN(TypeName="decimal(18,2)")]
+public decimal Preco {get;set;}
+
+
+######################################################################
+	AULA 16- USANDO EF  CORE MIGRATION
+######################################################################
+Gerencia o versionamento do banco de dados.
+
+Métodos:
+add-migration nome_migração        - cria script
+update database       			   - aplica o script no sqlserver (banco)
+remove-MIGRATION  = desfazer a ação feita.
+
+
+######################################################################
+	AULA 17- POPULANDO BANCO DE DODOS COM MIGRATION
+######################################################################
+USAMOS O MIGRATION PARA MANIPULAR AS TABELAS SEJA OS DADOS.
+Criamos mi grationa -> 20200522204440_PopularTabelas
+Os dados foi criando via migration.
+Esse cenario é bom como quero criar paramentros de alguns tabelas de 
+sistemas.
+
+######################################################################
+	AULA 17- AJUSTE - POPULANDO BANCO DE DODOS COM MIGRATION
+######################################################################
+
+-> USO DO PADRÃO "REPOSITORY"
+
+::  FLUXO REQUISIÇÕES  ::
+SENARIO ACEITO - PARA DIMINUIR O ACOPLAMENTO.   "PADRÃO REPOSITORY"
+
+[IIS] -----> [CONTROLLER] -----> [REPOSITORY] ----> [EF CORE] ---> (BANCO DE DADOS)
+
+O QUE É O PADRAO [REPOSITORY]
+È um padrão estrutural que separa a sua "lógica de dominio" da sua lógica de acesso a "dados".
+Podemos usar o padrão REPOSITORY para desacoplar o modelo de dominio do código de acesso a dados.
+Vantagens:
+1-Desacopla a sua aplicação da lógica de acesso a dados.
+2-centraliza o seu código para consultas  e acesso aos dados.
+3-facilita os testes unitários.
+4-Minimiza a duplicidade de codigo nas consultas.
+
+
+:: COMO IMPLENTATAR O PADRAO REPOSITORY ::
+Implementação.
+
+[INTERFACE]						<----- [CLASSE  CONCRETA]
+aqui defino todos métodos
+necesario
+
+Exemplo com os dominios - Lanche e Categoria
+
+[ILancheRepository] 	<----- [LancheRepository]
+[ICategoriaRepository] 	<----- [CategoriaRepository]
+
+
+
+######################################################################
+	AULA 20- IMPLEMENTANDO O PADRÃO REPOSITORY
+######################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
