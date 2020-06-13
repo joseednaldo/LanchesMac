@@ -212,9 +212,30 @@ Apos isso , chamamos por denpencia o serviço no controller.
 ######################################################################
 	AULA 21- CRIANDO CONTROLLER E VIEW PARA MOSTRAR OS LANCHES...
 ######################################################################
+Criando a  injecção de pencendia entre contoller e serviço.
+
+EX:
+private readonly ILancheRepository _lancheRepository;
+	private readonly ICategoriaRepository _categoriaRepository;
+
+	public LancheController(ILancheRepository lancheRepository,
+		ICategoriaRepository categoriaRepository)
+	{
+		//injeção de pendencia das interfaces...
+		// quando o controlador for chamar ILancheRepository , como eu tenho um serviço registrado pra ele , vamos recuperar a instancia da implementação da interface => "lancheRepository"
+		_lancheRepository = lancheRepository;
+		_categoriaRepository = categoriaRepository;
+
+	}
+	
+
+::: TIPOS DE RETORNO ::
+IActionResult  = RETORNA UM ActionResult  QUE PODE SER UMA ViewREsult, pode ser diversoes tipos de retorno.
 
 
-
+######################################################################
+	AULA 22- AJUSTANDO O CODIGO DA  VIEW LIST
+######################################################################
 
 
 
