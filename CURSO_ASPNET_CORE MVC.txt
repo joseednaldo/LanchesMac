@@ -149,16 +149,18 @@ sistemas.
 	AULA 17- AJUSTE - POPULANDO BANCO DE DODOS COM MIGRATION
 ######################################################################
 
--> USO DO PADRÃO "REPOSITORY"
+
+######################################################################
+	AULA 20- IMPLEMENTANDO O PADRÃO REPOSITORY
+######################################################################
 
 ::  FLUXO REQUISIÇÕES  ::
 SENARIO ACEITO - PARA DIMINUIR O ACOPLAMENTO.   "PADRÃO REPOSITORY"
-
 [IIS] -----> [CONTROLLER] -----> [REPOSITORY] ----> [EF CORE] ---> (BANCO DE DADOS)
 
 O QUE É O PADRAO [REPOSITORY]
-È um padrão estrutural que separa a sua "lógica de dominio" da sua lógica de acesso a "dados".
-Podemos usar o padrão REPOSITORY para desacoplar o modelo de dominio do código de acesso a dados.
+È um padrão estrutural que separa a sua "lógica de dominio" da sua lógica de "acesso a dados".
+Podemos usar o padrão REPOSITORY para desacoplar o "modelo de dominio" do código de acesso a dados.
 Vantagens:
 1-Desacopla a sua aplicação da lógica de acesso a dados.
 2-centraliza o seu código para consultas  e acesso aos dados.
@@ -169,21 +171,47 @@ Vantagens:
 :: COMO IMPLENTATAR O PADRAO REPOSITORY ::
 Implementação.
 
-[INTERFACE]						<----- [CLASSE  CONCRETA]
-aqui defino todos métodos
-necesario
+[INTERFACE]										<--------------- [CLASSE  CONCRETA]  a classe concreta vai herda os metodos da interface
+Na interface definotodos os metodos que vou usar.
 
 Exemplo com os dominios - Lanche e Categoria
-
-[ILancheRepository] 	<----- [LancheRepository]
-[ICategoriaRepository] 	<----- [CategoriaRepository]
+[ILancheRepository] 	<----- [LancheRepository]  		= HERDA A INTERFACE
+[ICategoriaRepository] 	<----- [CategoriaRepository] 	= HERDA A INTERFACE
 
 
 
 ######################################################################
 	AULA 20- IMPLEMENTANDO O PADRÃO REPOSITORY
 ######################################################################
+[ILancheRepository] 	<----- [LancheRepository]  		= HERDA A INTERFACE
+[ICategoriaRepository] 	<----- [CategoriaRepository] 	= HERDA A INTERFACE
+Nesse contexto que esta referenciando o EF é o repository.
 
+
+::: IMPORTANTISSIMO  ::
+QUANDO USAMOS UMA "INTERFACE" PREISAMOS FAZER UM "INJEÇÃO DE DEPENCIA" PARA USA-LO NO CONTROLADOR.
+OU DESEJA QUANDO "DEFINIMOS UMA INTERFACE E SUA IMPLEMENTAÇÃO" TEMOS QUE "REGISTRAR ISSO COMO UM "SERVIÇO"
+PRA FAZER "INJEÇÃO DE DEPENCIA NO CONTROLLE".
+
+::: COMO CRIAR O SERVIÇO.
+    FAZEMOS ISSO NA CLASSE "Startup.cs"
+	
+TEMOS:
+1-AddTransient  => Significa que o serviço vai ser criado cada vez que ele for solicitado.
+2-AddScoped  	=> Significa que o serviço é criado uma  vez por solitação.
+3-AddSingleton  => Significa que vai ser criado na primeira que for solicitado.
+
+ex:
+//Registrando como serviço minhas interfaces pra ser usado nos controles... 
+//specified = especificado  / transient = transitorio
+services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+services.AddTransient<ILancheRepository, LancheRepository>();
+
+Apos isso , chamamos por denpencia o serviço no controller.
+
+######################################################################
+	AULA 21- CRIANDO CONTROLLER E VIEW PARA MOSTRAR OS LANCHES...
+######################################################################
 
 
 

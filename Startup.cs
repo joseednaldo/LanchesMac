@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LanchesMac.Context;
+using LanchesMac.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,14 @@ namespace LanchesMac
             // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("base")));
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Util.GetConnectionString("base")));
 
+            //Registrando como serviço minhas interfaces pra ser usado nos controles... 
+            //specified = especificado  / transient = transitorio
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+            services.AddTransient<ILancheRepository, LancheRepository>();
+
+
+
+            //services.AddMvc();  eu nao tinha
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

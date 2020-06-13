@@ -5,7 +5,7 @@ namespace LanchesMac.Models
 {
     public class Categoria
     {
-        public int CategoriaId { get; set; }
+        public int Id { get; set; }
 
         [StringLength(100)]
         public string CategoriaNome { get; set; }
