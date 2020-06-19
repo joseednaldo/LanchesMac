@@ -1,4 +1,3 @@
-
 #######################
 CURSO UDEMY
 #######################
@@ -236,12 +235,22 @@ IActionResult  = RETORNA UM ActionResult  QUE PODE SER UMA ViewREsult, pode ser 
 ######################################################################
 	AULA 22- AJUSTANDO O CODIGO DA  VIEW LIST
 ######################################################################
+O QUE SIGNIFICA=>
+@model IEnumerable<LanchesMac.Models.Lanche>
+@model = Ultilizada para especificar o tipo que vamos usar na view.
+No caso acima fala que esotu usando uma lista do tipo "lanches".
+Outro exemplo de uso:
+@using LanchesMac.Models
+@model IEnumerable<Lanche>
 
+@model => é apenas a doretiva que aponta para o tipo lanche.
+Model  => é ultilizada apenas para acessar o tipo que é passada na view.
+Ou seja permiti acesso ao "a lista do tipo lanche".
 
-
-
-
-
+############################################################################
+	AULA 23 QUAL O PAPEL DOS ARQUIVOS _ViweStart,_ViewImports e o BOOTSTRAP
+############################################################################
+_ViweStart =
 
 
 
