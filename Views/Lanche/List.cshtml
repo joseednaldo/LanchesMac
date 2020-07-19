@@ -1,11 +1,9 @@
-﻿<!--Significa também que a view é fortimente tipada-->
-@model IEnumerable<LanchesMac.Models.Lanche>
-@*Outro exemplo de uso:
-    @using LanchesMac.Models
-    @model IEnumerable<Lanche>*@
+﻿
+@model LancheListViewModel
+
 
 <div>
-    <h2>Todos os Lanches</h2>
+    <h2>@Model.CategoriaAtual</h2>
 </div>
 
 
@@ -13,11 +11,12 @@
 Model  => é a propriedade que acessa o tipo
          Representa a lista de lanche.
     *@
-@foreach (var lanche in Model) 
+@foreach (var lanche in Model.Lanches)
 {
-    <div>
-        <h4>Lanche: @lanche.Nome</h4>
-        <p><img src="@lanche.ImagemUrl"/></p>
-        <p>Preco: @lanche.Preco.ToString(c)</p>
-    </div>
+    //renderizando a partialview
+    //@Html.PartialAsync("_LanchesResumo", lanche);   modelo antigo
+
+    //modelo novo 
+    <partial name="_LanchesResumo"  for="@lanche"/>
+
 }

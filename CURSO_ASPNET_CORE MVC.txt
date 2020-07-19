@@ -197,8 +197,9 @@ PRA FAZER "INJEÇÃO DE DEPENCIA NO CONTROLLE".
 	
 TEMOS:
 1-AddTransient  => Significa que o serviço vai ser criado cada vez que ele for solicitado.
-2-AddScoped  	=> Significa que o serviço é criado uma  vez por solitação.
-3-AddSingleton  => Significa que vai ser criado na primeira que for solicitado.
+3-AddSingleton  => Significa que vai ser criado na primeira que for solicitado. ou seja toda as as requisições vai ter esse mesmo objeto.
+2-AddScoped  	=> Significa que o serviço é criado uma  vez pra cada solitação.
+
 
 ex:
 //Registrando como serviço minhas interfaces pra ser usado nos controles... 
@@ -245,12 +246,219 @@ Outro exemplo de uso:
 
 @model => é apenas a doretiva que aponta para o tipo lanche.
 Model  => é ultilizada apenas para acessar o tipo que é passada na view.
-Ou seja permiti acesso ao "a lista do tipo lanche".
+Ou seja permiti acesso ao "a lista do tipo lanche". è a properidade que acessa o tipo.
 
 ############################################################################
 	AULA 23 QUAL O PAPEL DOS ARQUIVOS _ViweStart,_ViewImports e o BOOTSTRAP
 ############################################################################
-_ViweStart =
+-Layout.cshtml  = comum para todas as telas, ou seja é um arquivo que mostrado em 
+todas as telas ex: rodade,footer etc...logo...menu
+Carregamos os arquicos de style css..
+
+No @RenderBody() = è onde as telas(views) é renderizada.
+
+_ViweStart = È Através do _ViweStart que => as views sabe qual é o "arquivo de layout" que ele tem que utilizar.
+
+
+_ViweImports.cshtml =   O objetivo dele é conter todas as referenças e import comum em todas as "VIEWS"
+Ex:
+@using LanchesMac   		= referencia o projeto 
+@using LanchesMac.Models 	= referencia a model 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers  = significa que a ultilização das tags helper estão habilitadas.
+
+############################################################################
+	AULA 24 			VIEW MODEL
+############################################################################
+É UM PADRÃO QUE PERMITE SEPARAR AS RESPONSABILIDADES  ENTRE MODELS DE DOMINIO
+E OS MODELS QUE ATENDEM AS WIEWS.
+
+PERMITE MODELAR ENTIDADES A PARTI DE UM OU MAIS MODELS EM UM UNICO OBJETO QUE SERÃO REPRESENTADOS
+NA VIEWS.
+"MODELS DE DOMONIO" REPRESENRA O MODELO DE NEGOCIO.
+
+1-Senario  = Temos que apresenta a view informações oriundas de 2 ou mais modelos,
+nesse cenario a "viewmodel" nos ajuda. Pode capsular varios models em um objeto.
+
+BENEFICOS DA VIEWMODEL.
+1-NAO PRECISA ALTERAR UMA CLASSE "MODEL"  PARA ATENDER AS NECESSIDADES DE UMA VIEW.
+2-AGRUPAR INFORMAÇÇÕES  DE UMA OU MAIS "MODELS" EM UMA UNICA CLASSE, POUPANDO NECESSIDADE DE FAZER VARIAS CONSULTAS.
+3-UM DADO NÃO CONTIDO NO "MODEL" DE DOMINIO PODE SER FIALCIMENTE TRANSPORTADO PARA VIEW MODEL.
+
+############################################################################
+	AULA 25 			IMPLEMENTANDO A VIEW MODEL
+############################################################################
+Posso usar nos meus controles a "viewmodel" para recuperar os dados , ao invés
+de usar a "model" direta.
+Ao invés de usar  a conexão direta com a model, podemos usar av viewmodel para
+desacoplar.
+
+
+############################################################################
+	AULA 26 		PARTIAL VIEWS
+############################################################################
+UMA PARTIAL VIEW É UAM VIEW QUE É "RENDERIZADA" EM OUTRA => VIEW.
+ELAS SÃO USADAS PARA ENCAPSULAR A LÓGICA REUTILIZADA NAS  VIEWS
+PERMITINDO SIMPLIFICAR A COMPLEXIDADE DAS VIEWS.
+ELAS PODEM SER USADAS EM MULTIPLAS VIEWS ONDE É NECESARIO
+UMA LÓGICA SIMILAR EVITANDO ASSIM A DUPLICIADADE DE CODIGO.
+-POSSUI A EXTENSÃO .CSHTML
+-SAO RENDERIZADAS DE FORMA DIFERENTE (NÃO EXECUTAM _ViweStart.CSHTML
+
+############################
+REFERENCIANDO PARTIAL VIEWS
+############################
+Exemplo 1 => mais usual
+@HTML.PARTIAL("NomeDaView")                           ->  Retorna um IHTMLSTRING
+
+Exemplo 2Da
+ Html.RenderPartial("NomeView");
+} 
+Não retorna um resultado. 
+Transmite a saida renderizada diretamente para a resposta.
+
+
+########################################
+ACESSANDO DADOS NAS PARTIAL VIEWS
+########################################
+QUANDO UMA PARTIAL VIEW É INSTANCIADA ELA OBTÉM UMA CÓPIA DO VIEWDATA DA VIEW PAI.
+EX:
+@Html.Partial("NomeDaView", ViewData)
+@Html.Partial("NomeDaView", model)
+
+Podemos usar: partial,RenderPartial,PArtialAsybc e RenderPartialAsync
+Obs:
+As atualziações feitas nos dados da "PARTIAL VIEW", não são mantidas na view principal.
+o viewdata alterado em uma partial view é perdido quando ela retorna.
+
+########################################
+LOCALIZANDO PARTIAL VIEWS
+########################################
+
+@Html.Partial("NomeView")=> usa a view autal na pasta com este nome, s enada for encontrado, procura naá
+pasta shared.
+@Html.Partial("NomeView.cshtml"), uma view com este nome deve existir na mesma pasta.
+@Html.Partial("~/views/folder/NomeView.cshtml")=> Caminhos que iniciam com "/" ou "~/" refere-se á raiz da aplicação.
+
+
+########################################
+AUALA 27/28 - IMPLEMENTANDO PARTAIL VIEWS
+########################################
+
+A PARTI DA VERSÃO 3.1
+TEMOS O JELP PARTIAL.
+<PARTIAL NAME="_LanchesResumo" for="@lanche"/>
+
+name=indica o noem ou caminho da partial view.
+for=Atributo que permite passar um model para paetial view.
+
+
+ 
+########################################
+AULA - 29 CARRINHO DE COMPRA.
+########################################
+criamos a classe "carrinhoCompraIem"
+e geramos o migration pra criar a tabela no banco.
+add-migration "carrinhoCompraIem"
+update-database  -- pra criar no banco...
+
+##########################################
+AULA - 30 SESSAO E O ESTADO DA APLICAÇAO.
+##########################################
+
+PROTOCOLO HTTP -  PROTOCOLO SEM ESTADO
+ASP.NET  CORE
+PACOTE DA MICROSOFT ->SESSION : MICROSOFT.ASPNETCORE.SESSION. 
+
+COM BASE EM UM DICIONARIO OU TABELA HASH BO SERVIDOR, O ESTADO DA SESSÇAO PERSISTE OS DADOS ATRAVÉS DAS REQUISIÇÕES DE UM NAVEGADOR.
+O ASP.NET CORE MANTEM O ESTADO DA SESSÃO , DANDO AO CLIENTE UM COOKIE QUE CONTEM UM "ID" DA SESSSÃO, QUE É ENVIADO AO SEEVIDOR COM CADA SOLICITAÇÃO.
+PODEMOS USAR O "ESTADO DA SESSÃO" PARA GAURDA DADOS USUARIO ENQUANTO ELE NAVEGA NA APLICAÇÃO.
+
+OS DADOS FICAM ARMAZENADO NO CACHE....]
+
+
+OS COOKIE DE SESSÃO TEM UM TEMPO DE VIDA, SÃO EXCLUIDO QUANDO A SESSÃO DO NAVEGADOR TERMINA.
+
+
+O SERVIDOR MANTEM UMA SESSÃO POR TEMPO LIMITADO APÓS A ÚLTIMA REQUISIÇÃO.
+VOCE PODE DEFINIR O TEMPO LIMITE DA SESSÃO OU USAR O VALOR PADRÃO QUE É DE 20 MINUTOS.
+O ESTADO DA SESSA~P É IDELA PARA ARMAZENAR DADOS DO USUÁRIO ESPECIFICO DE UMA DETERMINADA SESSÃO, FICAM NO CACHE
+E VÃO SER EXCLUINDO QUANDO : A SESSÃO EXPIRAR OU SE USADI O RECURSO SESSION.CLEAR();
+
+ONDE CONFIGURAMOS:
+CLASSE "STARTUP" DEVE CONTER.   IDistributedCache
+chamada da  => AddSession em configureSerevice()
+chamada da  => UseSessin em configure()
+
+ex:
+Public void ConfigureServies(IServiceCollection services)
+{
+  //Adiona uma implementação padrão de IDistributedCache.
+  servives.AddDistributedMemoryCache();
+  services.AddSession();
+}
+
+public void Configure(IApplicationBuider app, IHosttingEnvironment){
+	
+	app.UseSession();
+	app.Run(async(context)=>{
+			
+			await context.Response.WriteAsync(msg.GetMensagem());
+	});
+}
+
+Exemplo de como armazena dados na sessão.
+
+-criando variavaes
+const string SessionKeyNome="_Nome";
+const string SessionKeyIdade ="_Idade";
+
+--Fazendo atribuições na sessão
+httpContext.Session.SetString(SessionKeyNome,"ednaldo");
+httpContext.Session.SetInt32(SessionKeyIdade,37);
+
+--recuperando os dados da sessão.
+var nome = context.Session.GetString(SessionKeyNome);
+var idade = context.Session.GetString(SessionKeyIdade);
+
+
+################################################
+AULA - 31 IMPLEMENTANDO O CARRINHO DE COMPRAS
+################################################
+Configrando a session e serviços do carrinho.
+
+
+
+
+
+
+
+################################################
+AULA - 32 IMPLEMENTANDO O CARRINHO DE COMPRAS
+################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LanchesMac.Repositories;
+using LanchesMac.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LanchesMac.Controllers
@@ -35,13 +36,17 @@ namespace LanchesMac.Controllers
             ViewBag.LANCHE = "Lanches";
             ViewData["Categoria"] = "Categoria";
 
+            /*Recuperando dados baseado no modelo
             var lanches = _lancheRepository.Lanches;
             return View(lanches); // VIEW TIPADA
+            */
+
+            //Recuperando dados baseado na viewmodel.
+            var lancheslistViewModel = new LancheListViewModel();
+            lancheslistViewModel.Lanches = _lancheRepository.Lanches;
+            lancheslistViewModel.CategoriaAtual = "Categoria atual";
+            return View(lancheslistViewModel);
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

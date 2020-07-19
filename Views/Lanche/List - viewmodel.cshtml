@@ -1,0 +1,30 @@
+﻿
+@model LancheListViewModel
+
+
+<div>
+    <h2>@Model.CategoriaAtual</h2>
+</div>
+
+
+@*@model  => é apenas a diretiva  que aponta para o tipo lanche.
+Model  => é a propriedade que acessa o tipo
+         Representa a lista de lanche.
+    *@
+@foreach (var lanche in Model.Lanches) 
+{
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="img-thumbnail">
+        <p><img src="@lanche.ImagemUrl" class="img-fluid" alt="" /></p>
+    </div>
+
+    <div class="caption">
+        <h3 class="pull-righ"> @lanche.Preco.ToString("c")</h3>
+        <h3>Lanche: @lanche.Nome</h3>
+        <p>@lanche.DescricaoCurta</p>
+    </div>
+
+
+
+</div>
+}

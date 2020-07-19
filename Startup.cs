@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LanchesMac.Context;
+using LanchesMac.Models;
 using LanchesMac.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace LanchesMac
 {
@@ -27,7 +23,7 @@ namespace LanchesMac
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+
             services.AddControllersWithViews();
             // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("base")));
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Util.GetConnectionString("base")));
@@ -36,9 +32,9 @@ namespace LanchesMac
             //specified = especificado  / transient = transitorio
             services.AddTransient<ICategoriaRepository, CategoriaRepository>();
             services.AddTransient<ILancheRepository, LancheRepository>();
-
-
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma unica vez...
+            services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
+            services.AddSession();
             //services.AddMvc();  eu nao tinha
         }
 
@@ -55,9 +51,10 @@ namespace LanchesMac
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
