@@ -34,6 +34,7 @@ namespace LanchesMac
             services.AddTransient<ILancheRepository, LancheRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma unica vez...
             services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
+            services.AddMemoryCache();
             services.AddSession();
             //services.AddMvc();  eu nao tinha
         }

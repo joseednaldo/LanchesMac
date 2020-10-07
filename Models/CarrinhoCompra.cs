@@ -1,5 +1,5 @@
 ﻿using LanchesMac.Context;
-using LanchesMac.Migrations;
+//using LanchesMac.Migrations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;

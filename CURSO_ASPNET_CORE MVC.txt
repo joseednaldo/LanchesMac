@@ -427,22 +427,25 @@ AULA - 31 IMPLEMENTANDO O CARRINHO DE COMPRAS
 Configrando a session e serviços do carrinho.
 
 
+ 
+
+############################################################
+AULA - 32 IMPLEMENTANDO O CONTROLLER DO CARRINHO DE COMPRAS
+############################################################
+criar uam viewmodel pra representa a view.
 
 
 
 
+############################################################
+AULA - 33 CRIANDO PAGINA INICIAL -LANHCES PREFERIDOS.
+############################################################
+HOMECONTROLES
+DICA:
+"PARTIAL VIEW" E VIEW É A MESMA COISA A UNICA DIFERENÇA É QUE UMA PARTIAL VIEW NAO INVOCA O ARQUIVO "WIEW START", QUANDO  É CARREGADA.
+TODOS OS ARQUIVOS DA PASTA SHARED E DISPONIVEL PRA TODAS AS VIEWS...
 
-################################################
-AULA - 32 IMPLEMENTANDO O CARRINHO DE COMPRAS
-################################################
-
-
-
-
-
-
-
-
+PAREI COM 3:31'
 
 
 

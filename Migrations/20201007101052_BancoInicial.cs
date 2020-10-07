@@ -2,7 +2,7 @@
 
 namespace LanchesMac.Migrations
 {
-    public partial class MigracaoInicial : Migration
+    public partial class BancoInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,14 +10,14 @@ namespace LanchesMac.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    CategoriaId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoriaNome = table.Column<string>(maxLength: 100, nullable: true),
                     Descricao = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categorias", x => x.CategoriaId);
+                    table.PrimaryKey("PK_Categorias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,9 +43,35 @@ namespace LanchesMac.Migrations
                         name: "FK_Lanches_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
-                        principalColumn: "CategoriaId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "CarrinhoCompraItens",
+                columns: table => new
+                {
+                    CarrinhoCompraItemId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LancheId = table.Column<int>(nullable: true),
+                    Quantidade = table.Column<int>(nullable: false),
+                    CarrinhoCompraId = table.Column<string>(maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarrinhoCompraItens", x => x.CarrinhoCompraItemId);
+                    table.ForeignKey(
+                        name: "FK_CarrinhoCompraItens_Lanches_LancheId",
+                        column: x => x.LancheId,
+                        principalTable: "Lanches",
+                        principalColumn: "LancheId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarrinhoCompraItens_LancheId",
+                table: "CarrinhoCompraItens",
+                column: "LancheId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lanches_CategoriaId",
@@ -55,6 +81,9 @@ namespace LanchesMac.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CarrinhoCompraItens");
+
             migrationBuilder.DropTable(
                 name: "Lanches");
 
