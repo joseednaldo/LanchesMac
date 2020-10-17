@@ -8,6 +8,8 @@ namespace LanchesMac.ViewModels
 {
     public class HomeViewModel
     {
+
+        //lógica da view
         public IEnumerable<Lanche>LanchePreferidos { get; set; }
 
     }

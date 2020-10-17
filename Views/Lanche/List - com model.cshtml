@@ -1,5 +1,6 @@
 ﻿<!--Significa também que a view é fortimente tipada-->
 @model IEnumerable<LanchesMac.Models.Lanche>
+
 @*Outro exemplo de uso:
     @using LanchesMac.Models
     @model IEnumerable<Lanche>*@
@@ -9,8 +10,8 @@
 </div>
 
 
-@*@model  => é apenas a diretiva  que aponta para o tipo lanche.
-    Model  => é a propriedade que acessa o tipo
+@*@model  => é apenas a diretiva  que aponta para o tipo da lista que é de lanche.
+    Model  => é a propriedade que acessa o tipo que 
              Representa a lista de lanche.
 *@
 @foreach (var lanche in Model)

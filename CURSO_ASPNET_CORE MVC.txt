@@ -2,25 +2,25 @@
 CURSO UDEMY
 #######################
 launchSettings.json   	= configração do localhost
-appsettings.json  		= arquivo de configração , seria o equivalente ao web.config.
-Program.cs  			=  inicializa a aplicação onde é feita a configuração do host / servidor.
-Startup.cs 				=  configura os servicos... que vai ser usado.
+appsettings.json  		= arquivo de configuracao , seria o equivalente ao web.config, connectionString do banco de dados.
+Program.cs  			= inicializa a aplicação onde é feita a configuração do host / servidor.
+Startup.cs 				= configura os servicos... que vai ser usado.
 
--- OBJETO CO MVC - BAIXO ACOPLAMENTO... 
-MODEL 		-> RESPONSAVEL POR MANTER OS DADOS E A LÓGICA DE NEGOCIO DA APP.
+-- OBJETIVO DO MVC - BAIXO ACOPLAMENTO... 
+MODEL 		-> RESPONSAVEL POR MANTER OS DADOS E A "LÓGICA DE NEGOCIO" DA APP.
 VIEW 		-> INTERFACE COM O USUARIO DA APP QUE EXIBE OS DADOS.  
 CONTROLLER  -> RECEBE E TRATA AS REQUISIÇÕES(DO BROWSER/USUARIO) E RENDERIZA A VIEW APROPRIADA COM OS DADOS.
 
 
 MODELO DE MVC :
 URL-> não é uma página.
--No modelo de desenvolvimento MVC uma "URL" corresponde a uma ação de um "controler" e não uma página em disco..
--No modelo de desenvolvimento MVC  as requisições do navegador (usuário) são mapeadas para "ações" do "CONTROLLER"
+-NO MODELO DE DESENVOLVIMENTO MVC UMA "URL" CORRESPONDE A UMA "AÇÃO" DE UM "CONTROLER" E NÃO UMA PÁGINA EM DISCO..
+-NO MODELO DE DESENVOLVIMENTO MVC  AS REQUISIÇÕES DO NAVEGADOR (USUÁRIO) SÃO MAPEADAS PARA "AÇÕES" DO "CONTROLLER"
 
 EX:
 HTTP://LOCALHOST/HOME/INDEX 
 HOME 	= CONTROLLER
-INDEX 	= ACTION
+INDEX 	= ACTION/ AÇÃO
 
 
 ###################FUNCIONAENTO DO PROJETO###############
@@ -33,7 +33,7 @@ PASTA SHARED  = ARQUIVOS / LAYOUT COMPARTILHADO EX: BARRA DE MENU.
 TAMBÉM OS JS,JQUERY E BOOTSTRAP.
 
 
-projeto.csproj = mostra as dependeças do projeto.
+PROJETO.CSPROJ = MOSTRA AS DEPENDEÇAS DO PROJETO.
 
 
 ##########################################################
@@ -45,6 +45,7 @@ MODELO
 ##########
 CRIANDO O MODELO DE DOMINIO
 -SÃO AS CLASSES QUE REPRESENTAM A SUA LÓGICA DE NEGÓCIO.
+EX: PRODUTO.CS / CLIENTE.CS / CIDADE.CS ETC.
 
 ###################################
 	AULA 11 - ENTITY FRAMEWORK CORE
@@ -65,7 +66,7 @@ ALTERAR,EXCLUIR E INCLUIR
 
 
 ############
-CODE FISRT   /MODELO USAO NO RCI...
+CODE FISRT   /MODELO USADO NO RCI...
 ###########
 CRIAMOS AS CLASSES DE DOMINIO E O ENTIRY FRAMEWORK CRIAR O BANCO/TABELAS
 
@@ -91,9 +92,9 @@ DBSET 		= REPRESENTA O MAPEAMENTO  PARA A TABELAS DO BANCO DE DADOS.
 
 APPSETTING.JSON  = STRING DE CONEXÃO COM  BANCO DE DADOS.
 
-###
-	REGISTRAR NO ARQUIVO  "STARTUP" O CONTEXTO COMO SERVIÇO.
-###
+############################################################
+REGISTRAR NO ARQUIVO  "STARTUP" O CONTEXTO COMO SERVIÇO.
+#########################################################
 EX:
 SERVICES.AddContext<AppDbContext>(
 options = > options.UseSqlserver(Configation.GetConnectionString("DefaultConnection")))
@@ -111,15 +112,15 @@ onde configurações a contexto e conectionstring.
 ######################################################################
 	AULA 14 - USANDO O DATA NOTATION
 #######################################################################
-Recurso usado para validar entrada de dados e também podemos usar 
-com regra de negocio 
-ex: validar cartão de crédito , cpf, email.
+RECURSO USADO PARA VALIDAR ENTRADA DE DADOS E TAMBÉM PODEMOS USAR 
+COM REGRA DE NEGOCIO 
+EX: VALIDAR CARTÃO DE CRÉDITO , CPF, EMAIL.
 
 
 ######################################################################
 	AULA 15- AJUSTO DATA  NOTATION
 #######################################################################
-COLCOAR NAS PROPRIEDADE
+COLOCAR NAS PROPRIEDADE
 [COLUMN(TypeName="decimal(18,2)")]
 public decimal Preco {get;set;}
 
@@ -132,7 +133,7 @@ Gerencia o versionamento do banco de dados.
 Métodos:
 add-migration nome_migração        - cria script
 update database       			   - aplica o script no sqlserver (banco)
-remove-MIGRATION  = desfazer a ação feita.
+remove-MIGRATION 					= desfazer a ação feita.
 
 
 ######################################################################
@@ -158,20 +159,20 @@ SENARIO ACEITO - PARA DIMINUIR O ACOPLAMENTO.   "PADRÃO REPOSITORY"
 [IIS] -----> [CONTROLLER] -----> [REPOSITORY] ----> [EF CORE] ---> (BANCO DE DADOS)
 
 O QUE É O PADRAO [REPOSITORY]
-È um padrão estrutural que separa a sua "lógica de dominio" da sua lógica de "acesso a dados".
-Podemos usar o padrão REPOSITORY para desacoplar o "modelo de dominio" do código de acesso a dados.
-Vantagens:
-1-Desacopla a sua aplicação da lógica de acesso a dados.
-2-centraliza o seu código para consultas  e acesso aos dados.
-3-facilita os testes unitários.
-4-Minimiza a duplicidade de codigo nas consultas.
+È UM PADRÃO ESTRUTURAL QUE SEPARA A SUA "LÓGICA DE DOMINIO" DA SUA LÓGICA DE "ACESSO A DADOS".
+PODEMOS USAR O PADRÃO REPOSITORY PARA DESACOPLAR O "MODELO DE DOMINIO" DO "CÓDIGO DE ACESSO A DADOS".
+VANTAGENS:
+1-DESACOPLA A SUA APLICAÇÃO DA LÓGICA DE ACESSO A DADOS.
+2-CENTRALIZA O SEU CÓDIGO PARA CONSULTAS  E ACESSO AOS DADOS.
+3-FACILITA OS TESTES UNITÁRIOS.
+4-MINIMIZA A DUPLICIDADE DE CODIGO NAS CONSULTAS.
 
 
 :: COMO IMPLENTATAR O PADRAO REPOSITORY ::
 Implementação.
 
 [INTERFACE]										<--------------- [CLASSE  CONCRETA]  a classe concreta vai herda os metodos da interface
-Na interface definotodos os metodos que vou usar.
+NA INTERFACE DEFIMOS TODOS OS "MÉTODOS" QUE VOU USAR.
 
 Exemplo com os dominios - Lanche e Categoria
 [ILancheRepository] 	<----- [LancheRepository]  		= HERDA A INTERFACE
@@ -188,12 +189,12 @@ Nesse contexto que esta referenciando o EF é o repository.
 
 
 ::: IMPORTANTISSIMO  ::
-QUANDO USAMOS UMA "INTERFACE" PREISAMOS FAZER UM "INJEÇÃO DE DEPENCIA" PARA USA-LO NO CONTROLADOR.
-OU DESEJA QUANDO "DEFINIMOS UMA INTERFACE E SUA IMPLEMENTAÇÃO" TEMOS QUE "REGISTRAR ISSO COMO UM "SERVIÇO"
-PRA FAZER "INJEÇÃO DE DEPENCIA NO CONTROLLE".
+QUANDO USAMOS UMA "INTERFACE" PRECISAMOS FAZER UM "INJEÇÃO DE DEPENDENCIA" PARA USA-LO NO "CONTROLADOR".
+OU SEJA QUANDO "DEFINIMOS UMA INTERFACE E SUA IMPLEMENTAÇÃO" TEMOS QUE "REGISTRAR ISSO COMO UM "SERVIÇO"
+PRA FAZER "INJEÇÃO DE DEPENCIA NO CONTROLLER".
 
 ::: COMO CRIAR O SERVIÇO.
-    FAZEMOS ISSO NA CLASSE "Startup.cs"
+    FAZEMOS ISSO NA CLASSE "STARTUP.CS"
 	
 TEMOS:
 1-AddTransient  => Significa que o serviço vai ser criado cada vez que ele for solicitado.
@@ -244,7 +245,7 @@ Outro exemplo de uso:
 @using LanchesMac.Models
 @model IEnumerable<Lanche>
 
-@model => é apenas a doretiva que aponta para o tipo lanche.
+@model => é apenas a diretiva que aponta para o tipo lanche.
 Model  => é ultilizada apenas para acessar o tipo que é passada na view.
 Ou seja permiti acesso ao "a lista do tipo lanche". è a properidade que acessa o tipo.
 
@@ -272,25 +273,35 @@ Ex:
 É UM PADRÃO QUE PERMITE SEPARAR AS RESPONSABILIDADES  ENTRE MODELS DE DOMINIO
 E OS MODELS QUE ATENDEM AS WIEWS.
 
-PERMITE MODELAR ENTIDADES A PARTI DE UM OU MAIS MODELS EM UM UNICO OBJETO QUE SERÃO REPRESENTADOS
+PERMITE "MODELAR" ENTIDADES A PARTI DE UM OU MAIS "MODELS" EM UM UNICO OBJETO QUE SERÃO REPRESENTADOS
 NA VIEWS.
-"MODELS DE DOMONIO" REPRESENRA O MODELO DE NEGOCIO.
+"MODELS DE DOMINIO" REPRESENRA O MODELO DE NEGOCIO.
 
-1-Senario  = Temos que apresenta a view informações oriundas de 2 ou mais modelos,
-nesse cenario a "viewmodel" nos ajuda. Pode capsular varios models em um objeto.
+1-SENARIO  = TEMOS QUE APRESENTA A VIEW INFORMAÇÕES ORIUNDAS DE 2 OU MAIS MODELOS,
+NESSE CENARIO A "VIEWMODEL" NOS AJUDA. PODE CAPSULAR VARIOS MODELS EM UM OBJETO.
 
 BENEFICOS DA VIEWMODEL.
 1-NAO PRECISA ALTERAR UMA CLASSE "MODEL"  PARA ATENDER AS NECESSIDADES DE UMA VIEW.
 2-AGRUPAR INFORMAÇÇÕES  DE UMA OU MAIS "MODELS" EM UMA UNICA CLASSE, POUPANDO NECESSIDADE DE FAZER VARIAS CONSULTAS.
 3-UM DADO NÃO CONTIDO NO "MODEL" DE DOMINIO PODE SER FIALCIMENTE TRANSPORTADO PARA VIEW MODEL.
+4-cada viewmodel possui uam view tipada.
+5-atua como modelo pra view.
+6-contem a logica de interface e a referencia ao model.
+
+dica:
+se exxistem informações em seu model que são ultilizados somente pelas views entao o seu Model esta com a responsabilidade 
+também de cuidar da camada de apresentação.
+o melhor é criar uma viewmodel.
+
 
 ############################################################################
 	AULA 25 			IMPLEMENTANDO A VIEW MODEL
 ############################################################################
 Posso usar nos meus controles a "viewmodel" para recuperar os dados , ao invés
 de usar a "model" direta.
-Ao invés de usar  a conexão direta com a model, podemos usar av viewmodel para
+Ao invés de usar  a conexão direta com a model, podemos usar uma viewmodel para
 desacoplar.
+
 
 
 ############################################################################
@@ -371,9 +382,9 @@ PACOTE DA MICROSOFT ->SESSION : MICROSOFT.ASPNETCORE.SESSION.
 
 COM BASE EM UM DICIONARIO OU TABELA HASH BO SERVIDOR, O ESTADO DA SESSÇAO PERSISTE OS DADOS ATRAVÉS DAS REQUISIÇÕES DE UM NAVEGADOR.
 O ASP.NET CORE MANTEM O ESTADO DA SESSÃO , DANDO AO CLIENTE UM COOKIE QUE CONTEM UM "ID" DA SESSSÃO, QUE É ENVIADO AO SEEVIDOR COM CADA SOLICITAÇÃO.
-PODEMOS USAR O "ESTADO DA SESSÃO" PARA GAURDA DADOS USUARIO ENQUANTO ELE NAVEGA NA APLICAÇÃO.
+PODEMOS USAR O "ESTADO DA SESSÃO" PARA GUARDA DADOS USUARIO ENQUANTO ELE NAVEGA NA APLICAÇÃO.
 
-OS DADOS FICAM ARMAZENADO NO CACHE....]
+OS DADOS FICAM ARMAZENADO NO CACHE....
 
 
 OS COOKIE DE SESSÃO TEM UM TEMPO DE VIDA, SÃO EXCLUIDO QUANDO A SESSÃO DO NAVEGADOR TERMINA.
@@ -381,8 +392,8 @@ OS COOKIE DE SESSÃO TEM UM TEMPO DE VIDA, SÃO EXCLUIDO QUANDO A SESSÃO DO NAV
 
 O SERVIDOR MANTEM UMA SESSÃO POR TEMPO LIMITADO APÓS A ÚLTIMA REQUISIÇÃO.
 VOCE PODE DEFINIR O TEMPO LIMITE DA SESSÃO OU USAR O VALOR PADRÃO QUE É DE 20 MINUTOS.
-O ESTADO DA SESSA~P É IDELA PARA ARMAZENAR DADOS DO USUÁRIO ESPECIFICO DE UMA DETERMINADA SESSÃO, FICAM NO CACHE
-E VÃO SER EXCLUINDO QUANDO : A SESSÃO EXPIRAR OU SE USADI O RECURSO SESSION.CLEAR();
+O ESTADO DA SESSA~P É IDEAL PARA ARMAZENAR DADOS DO USUÁRIO ESPECIFICO DE UMA DETERMINADA SESSÃO, FICAM NO CACHE
+E VÃO SER EXCLUINDO QUANDO : A SESSÃO EXPIRAR OU SE USAR O RECURSO SESSION.CLEAR();
 
 ONDE CONFIGURAMOS:
 CLASSE "STARTUP" DEVE CONTER.   IDistributedCache
@@ -426,13 +437,29 @@ AULA - 31 IMPLEMENTANDO O CARRINHO DE COMPRAS
 ################################################
 Configrando a session e serviços do carrinho.
 
+CarrinhoCompraItem.cs ->representa um lanche selecioando
+-CarrinhoCompra.cs -> representa uma coleção lanches selecionados
+-GetCArrinho=> ontem ou cira um carrinho de compra na sessão
+-AdcionarAoCarrinho => Adcionar um lanche ao carrinho
+-RemoverAoCarrinho=> remove um lanche do carrinho
+-GetCarrinhoCompraItens=> retorna os itens do carrinho de compra
+-LimparCarrinho=> remove todos os itens do carrinho
+-GetCarrinhoCompraTotal - calcula o total do carrinho.
 
  
+ ### ARQUIVO SETUP ###
+services.AddTransient<ICategoriaRepository, CategoriaRepository>();  // =>transient , significa que o objeto vai ser criado toda vez que for chamado, criando um novo objeto desse servico.
+services.AddTransient<ILancheRepository, LancheRepository>();
+services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma única vez... ou seja todas as chamadas "requisições" obtém o mesmo objeto.
+services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
+
+			
 
 ############################################################
 AULA - 32 IMPLEMENTANDO O CONTROLLER DO CARRINHO DE COMPRAS
 ############################################################
 criar uam viewmodel pra representa a view.
+
 
 
 
@@ -443,9 +470,208 @@ AULA - 33 CRIANDO PAGINA INICIAL -LANHCES PREFERIDOS.
 HOMECONTROLES
 DICA:
 "PARTIAL VIEW" E VIEW É A MESMA COISA A UNICA DIFERENÇA É QUE UMA PARTIAL VIEW NAO INVOCA O ARQUIVO "WIEW START", QUANDO  É CARREGADA.
-TODOS OS ARQUIVOS DA PASTA SHARED E DISPONIVEL PRA TODAS AS VIEWS...
 
-PAREI COM 3:31'
+
+############################################################
+AULA 34 VIEW COMPONENTS
+############################################################
+
+PERMITE CRIAR  FUNCIONALIDADES SEMELHANTES A UM "MÉTODO ACTION" DE UM CONTROLADOR INDEPENDENTE DE UM CONTROLADOR(SÃO SEMELHANTES ÁS PARTIAL VIEW).
+CONSITEM 2 DUAS PARTRS: 
+1-A CLASSE "DERIVADA DE VIEWCOMPONENTE"
+2-O RESULTADO QUE ELA RETORNA UMA VIEW.
+
+
+CRIANDO UAM VIEW COMPONENTS
+1-UMA CLASSE VC PODE SER CRIADA:
+
+A) DERIVADA DE UM VIEWCOMPONENTE
+B)DECORANDO A CLASSE COMO O ATRIBUTO  [VIEWCOMPONENT]
+C)CRIANDO UMA CLASSE ONDE O NOME TERMINA COM O SUFIXO "VIEWCOMPONENT"
+
+DEVE SER PUBLICA , NÃO ANINHA NEM ABSTRATA
+A CLASSE DEVE EXPOR O MEOTODO PULICO "INVOKEaSYNC"
+NOME =  NOME_DA_CLASSEVIEWCOMPONENTE  EX: TesteViewComponent
+
+
+####
+RETORNO
+####
+
+CRIANDO UMA VIEW COMPONENT (VC)
+
+2-O RESULTADO QUE ELA RETORNA (UMA VIEW).
+
+-A view retornada dever ser criada na pasta:
+-Views/Shared/COMPONENTS/nome_vc
+-onde o nome é o nome do prefixo usado na VC criada.
+
+EX:
+VC "Teste"ViewComponent  
+"devera" ter sua view criada na pasta : / View/Shared/COMPONENTS/"Teste"
+
+caso nao seja definido o nome da view , será definido como default.html.
+
+###########################
+USANDO UAM VIEWCOMPONENT
+##########################
+
+1- A PARTI DE UMA VIEW.
+@COMPONENT.InvokeAsync("nome_vc",<tipo anonimo com parametros>)
+
+A PARTI DO ASP.NET CORE 1.1, PODEMOS INVOCAR UMA VC USANDO UMA "TAG HELPER".
+EX:
+<vc>nome_vc param="...."></vc:nome_vc>
+	
+
+DEVEMOS USAR A DIRETIVA @ADDTAGHELPER;"NOME DO ASSEMBLY"
+"NOME DO ASSEMBLY"   =  NOME DO PROJETO.
+
+
+2- PODEMOS USAR USAR TAMBÉM  A PARTI DO  CONTROLADOR.
+EX: Return ViewComponent("nome_vc",new {parametros="..."})
+
+Public IACtionResult IndexVC(){
+  Return ViewComponent("Lista",new {sequncia de parametros="..."});
+}
+
+############################################################
+AULA 35 IMPLEMENTANDO UMA VIEW COMPONENTS
+############################################################
+VC  = VIEWCOMPONENT
+OBJETIVO: EXIBIR A QUANTIDADE DE ITENS NO CARRINHO DE COMPRAS NA BARRA DE NEVEGAÇÃO.
+
+1-PASSO:
+CRIAR PASTA "COMPONENTE"
+DEFINIR CLASSE CarrinhoCompraResumo  , DERIVANDO DE UM ViewC.
+DEFINIR O CODIGO DO MÉTODO INVOKE
+
+2- PASSO
+CRIAR UMA PASTA COMPONENTS NA PASTA SHARED.
+CRIAR A PASTA CarrinhoCompraResumo DENTRO DA PASTA COMPONENTS
+CRIAR A VIEW DEFAUT.CSHTML
+
+
+############################################################
+AULA 36 TAG HELPTERS
+############################################################
+Permite qu eo código do lado do servidor partivcipe na criação e redereização de elementos html em arquivos Razor.
+Elas são uam sintaxe alternativa aos html helpers e obtém o mesmo resultado final gerando codigo html.
+
+
+
+ex:
+TAG HELPER                                  				RENDERIZADO
+
+<input type="text" asp-for="Nome"/>      					<input id="nome" name="nome" tyoe="text" value=""/>
+<label  asp-for="E-mail"<label/>         					<label for="Enail">E-mail</label>
+<form asp-controller="Conta" asp-action="login"</form>		<form action="/Conta/Login" method="post"> </form>
+
+
+Dicas:
+A diretiva @addTagHelper    - torna as tags helpers disponiveis para um view.
+
+Esse recurso é criado automaticamente no arquivo   Views/_ViewImports.chtml
+
+**************************************
+ELEMENTOS PARA USAR O TAG HELPERS:
+**************************************
+Input tag helper
+Text area tag helpers
+Validation tag helper
+Label tag helper
+Select tag helper
+
+
+
+############################################################
+AULA 37 USANDO A TAG HELPTERS
+############################################################
+COLOCAR NA VIEWIMPORTS
+
+@addTagHelper LanchesMac.TagHelpers*, LanchesMac
+
+
+############################################################
+AULA  38 DEFININDO UMA NOVA ROTA NA APLICAÇÃO
+############################################################
+
+EXIBIR LANCHES POR ACATEGORIA
+-REDEFINIR A VIEW LIST.CSHTML
+ RETORNANDO LANCHES POR CATEGORIA 
+ 
+-DEFINIR UMA NOVA ROTA
+--INLCUINDO  A CATEGORIA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

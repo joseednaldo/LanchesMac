@@ -30,7 +30,9 @@ namespace LanchesMac.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
+                
                 LanchePreferidos = _lancheRepository.LanchesPrefferido
+               
             };
             return View(homeViewModel);
         }

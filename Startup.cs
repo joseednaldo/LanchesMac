@@ -30,9 +30,9 @@ namespace LanchesMac
 
             //Registrando como serviço minhas interfaces pra ser usado nos controles... 
             //specified = especificado  / transient = transitorio
-            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();  // =>transient , significa que o objeto vai ser criado toda vez que for chamado, criando um novo objeto desse servico.
             services.AddTransient<ILancheRepository, LancheRepository>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma unica vez...
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma única vez... ou seja todas as chamadas "requisições" obtém o mesmo objeto.
             services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
             services.AddMemoryCache();
             services.AddSession();
