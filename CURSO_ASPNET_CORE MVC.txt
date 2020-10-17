@@ -603,6 +603,60 @@ EXIBIR LANCHES POR ACATEGORIA
 -DEFINIR UMA NOVA ROTA
 --INLCUINDO  A CATEGORIA.
 
+##
+rota padrao
+###
+
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllerRoute(
+		name: "default",
+		pattern: "{controller=Home}/{action=Index}/{id?}");
+});
+
+Caso so esteja usando a roda padrao posso usar o comando abaixo pra substitui o a rota padrao.
+
+app.UseMvcWithDefaultRoute();
+
+
+
+##############################
+CRIANDO UAM NOVA OUTRA ROTA
+##############################
+
+Usamos o metodo :
+MaRoute -> usado  para adcionar / criar uma rota na coleção de rotas.
+As rotas na coleção routers são ordenadas e serão processadas na ordem na qual foram adcionadas.
+
+MapRoute usar 3 parametros : name,url r default
+Name: é o nome da rota
+url: é o padrao da URL onde definimos a url e os parametros  entre {}.
+default: é o mapeamento padrão;
+
+DICAS: è importante definir a rota na ordem correta.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
