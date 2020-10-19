@@ -552,6 +552,22 @@ CRIAR A PASTA CarrinhoCompraResumo DENTRO DA PASTA COMPONENTS
 CRIAR A VIEW DEFAUT.CSHTML
 
 
+
+DICAS:
+VIEW COMPONENTS.
+PERMITEM CRIAR "FUNCIONALIDADES" SEMELHANTE A UM "MÉTODO ACTION" DE CONTROLLADOR INDEPENDENTE DE UM 
+CONTROLADOR. È SEMELHANTE ÁS PARTIAL VIEWS.
+
+
+CONSSITEM EM DUAS PARTES:
+1-A classe (derivada de VewComponent)
+2-O resultado que ela retorna "uma view"
+
+Dicas: São reaproveitaveis.
+Podemos usar em varias aplicações, ou  usadas em diferentes controladores.
+Ex: carinho de compr ou qualquer coisa que quero usar seja em varios comntroladores ou aplicações através de uma bibilioteca.
+
+
 ############################################################
 AULA 36 TAG HELPTERS
 ############################################################
@@ -636,11 +652,39 @@ default: é o mapeamento padrão;
 DICAS: è importante definir a rota na ordem correta.
 
 
+############################################################
+AULA  39/40 
+############################################################
+
+DICAS:
+VIEW COMPONENTS.
+PERMITEM CRIAR "FUNCIONALIDADES" SEMELHANTE A UM "MÉTODO ACTION" DE CONTROLLADOR INDEPENDENTE DE UM 
+CONTROLADOR. È SEMELHANTE ÁS PARTIAL VIEWS.
+
+
+CONSSITEM EM DUAS PARTES:
+1-A classe (derivada de VewComponent)
+2-O resultado que ela retorna "uma view"
+
+Dicas: São reaproveitaveis.
+Podemos usar em varias aplicações, ou  usadas em diferentes controladores.
+Ex: carinho de compr ou qualquer coisa que quero usar seja em varios comntroladores ou aplicações através de uma bibilioteca.
+
+
+aAplicamos o conceito de viewComponents.
+criamos a CategoriaMenu.
 
 
 
 
+############1################################################
+AULA  41   exibindo detalhes do lanche     -  fazer
+############################################################
 
+-incluir botao para selecionar lanche e link oara exibir detahes do lanche.
+1-ajustar partial view _lancheResumo
+2-criar método action Details no controlador LancheController.
+3-criar ciew  Details.cshtml
 
 
 
