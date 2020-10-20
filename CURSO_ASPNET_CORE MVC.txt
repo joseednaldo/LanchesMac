@@ -678,7 +678,7 @@ criamos a CategoriaMenu.
 
 
 ############1################################################
-AULA  41   exibindo detalhes do lanche     -  fazer
+AULA  41   exibindo detalhes do lanche     -  fazer...
 ############################################################
 
 -incluir botao para selecionar lanche e link oara exibir detahes do lanche.

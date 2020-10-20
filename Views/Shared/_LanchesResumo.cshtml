@@ -6,10 +6,29 @@
 
     <div class="caption">
         <h3 class="pull-righ"> @Model.Preco.ToString("c")</h3>
-        <h3>Lanche: @Model.Nome</h3>
+        <h3>
+            <a asp-controller="Lanche" asp-action="Details" asp-route-lancheId="@Model.LancheId">@Model.Nome<</a>
+            <!--
+                     ESTAMOS PASSANDO PARA DETAILS(vIEW) O ID DO LANCHE COMO PARAMETRO E ESTAMOS ACIONANDO O CONTROLADOR LANCHE.
+            -->
+        </h3>
+
         <p>@Model.DescricaoCurta</p>
     </div>
 
+    <!-- CRIANDO BOTAO PARA INCLUIR NO CARRINHO DE COMPRA
+        DICAS:
+        asp-controller="CarrinhoCompra"= CONTROLLER QUE ESTA SENDO USADA
+        asp-action="AdicionarItemNoCarrinhoCompra" = ACTION QUE VAI SER USADA
+        asp-route-lancheId="@Model.LancheId"= PARAMETRO ENVIADO PARA ACTION
+    -->
+    <div class="addToCart text-right">
+        <p class="button ">
+            <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra" asp-action="AdicionarItemNoCarrinhoCompra" asp-route-lancheId="@Model.LancheId">
+                Incluir no Carrinho
+            </a>
+        </p>
+    </div>
 
 
 </div>                                                                                                          

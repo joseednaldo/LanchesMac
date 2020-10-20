@@ -69,7 +69,7 @@ namespace LanchesMac.Controllers
             return View("~/Views/Lanche/List.cshtml", new LancheListViewModel { Lanches = lanches, CategoriaAtual = "Todos os lanches" });
         }
 
-        public ViewResult Details(int lancheId)
+        public IActionResult Details(int lancheId)
         {
             var lanche = _lancheRepository.Lanches.FirstOrDefault(d => d.LancheId == lancheId);
             if (lanche == null)
