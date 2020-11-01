@@ -1,5 +1,6 @@
 ﻿@model CarrinhoCompraViewModel
 
+
 <div class="row checkoutForm">
     <h2>Seu carrinho de compras</h2>
     <h4>Aqui estãoos seus pedidos</h4>
@@ -18,15 +19,15 @@
         <tbody>
             @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItens)
             {
-            <tr>
-                <td class="text-center">@item.Quantidade</td>
-                <td class="text-left">@item.Lanche.Nome</td>
-                <td class="text-right">@item.Lanche.Preco.ToString("c")</td>
-                <td class="text-right">
-                    @((item.Quantidade * item.Lanche.Preco).ToString("c"));
-                </td>
-                <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove"></a></td>
-            </tr>
+                <tr>
+                    <td class="text-center">@item.Quantidade</td>
+                    <td class="text-left">@item.Lanche.Nome</td>
+                    <td class="text-right">@item.Lanche.Preco.ToString("c")</td>
+                    <td class="text-right">
+                        @((item.Quantidade * item.Lanche.Preco).ToString("c"));
+                    </td>
+                    <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove"></a></td>
+                </tr>
             }
         </tbody>
         <tfoot>

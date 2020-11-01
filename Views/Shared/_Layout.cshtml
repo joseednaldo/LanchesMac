@@ -23,10 +23,19 @@
                         </li>
                         <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> </li>
                         @await Component.InvokeAsync("CategoriaMenu");
-                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">
+                            Contato</a>
+                        </li>
                         @await Component.InvokeAsync("CarrinhoCompraResumo");
 
                     </ul>
+
+                    <form class="navbar-form navbar-right" asp-controller="Lanche" asp-action="Procurar" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Procurar lanche" name="searchString" value="@ViewData["searchString"]" />
+                        </div>
+                    </form>
                 </div>
             </div>
         </nav>

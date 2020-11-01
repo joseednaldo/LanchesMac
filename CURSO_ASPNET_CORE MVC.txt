@@ -678,13 +678,76 @@ criamos a CategoriaMenu.
 
 
 ############1################################################
-AULA  41   exibindo detalhes do lanche     -  fazer...
+AULA  41 /42  exibindo detalhes do lanche     -  fazer...
 ############################################################
 
 -incluir botao para selecionar lanche e link oara exibir detahes do lanche.
 1-ajustar partial view _lancheResumo
 2-criar método action Details no controlador LancheController.
 3-criar ciew  Details.cshtml
+
+
+[BindNever => a propriedade nao vai ser vinculada ao formulario.
+[ScaffoldColumn(false)] => indica que o campo nao vai ser visivel na view.
+public decimal PedidoTotal { get; set; }
+
+
+criando o migration das duas novas tabelas.
+add-migration Pedidos
+update-database
+
+
+############1################################################
+AULA  43 criando o repositorio e implementação  para o pedido.
+############################################################
+1-criar interface IpedidoRepository
+2-criar classe para implementar a interface  ->  PedidoRepository
+   
+2- Registrar  o serviço no metodo "ConfigureServices" da classe "Startup" services.AddTransient<IpedidoRepository,PedidoRepository>();
+
+
+
+############################################################
+AULA  44 - PROCURANDO LANCHES
+############################################################
+criamos uma action na contoller  Lanhce.
+Procurar
+ok.
+
+
+
+############################################################
+AULA  45 - CRIANDO CONTROLADOR PEDIDO
+############################################################
+
+GET = OBTENDO DADOS 
+POST=POSTAR / GRAVAR/PERSISTI DADOS NO BANCO.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

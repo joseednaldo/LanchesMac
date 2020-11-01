@@ -1,0 +1,16 @@
+﻿@model LanchesMac.Models.Pedido
+
+    <div class="row" orderForm>
+        <h3 class="text-center">Você esta em uma passo de completa
+        seu pedido <span class="glyphicon glyphicon-ok"></span></h3>
+
+        <form  action="Chekout" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label asp-for="Nome" class="col-md-2 control-label"></label>
+                <div class="col-md-5">
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+        </form>
+    </div>
