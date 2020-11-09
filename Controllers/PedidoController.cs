@@ -20,5 +20,31 @@ namespace LanchesMac.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Chekout(Pedido pedido)
+        {
+            var itens = _carrinhoCompra.GetCarrinhoCompraItens();
+            _carrinhoCompra.CarrinhoCompraItens = itens;
+
+            if(_carrinhoCompra.CarrinhoCompraItens.Count == 0)
+            {
+                ModelState.AddModelError("", "Seu carrinho  esta vazio, inclua um lanche...");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _pedidoRepository.CriarPedido(pedido);
+                _carrinhoCompra.LimparCarrinho();
+                return RedirectToAction("ChekoutCompleto");
+            }
+            return View(pedido);
+        }
+
+        public IActionResult ChekoutCompleto()
+        {
+            ViewBag.ChekoutCompletoMensagem = "Obrigado pelo seu pedido :";
+            return View();
+        }
     }
 }
