@@ -725,36 +725,90 @@ POST=POSTAR / GRAVAR/PERSISTI DADOS NO BANCO.
 
 
 
+############################################################
+AULA  46 - exibindo detalhes do pedido
+############################################################
+
+VIEWBAG = É UMA PROPRIEDADE DINAMICA BASEADA NO RECURSO DYNAMIC DA PLATAFORMA NET.
+USADO PARA PASSAR DADOS DO CONTROLLER PARA VIEW.
+
+TEMPDATA =  AJUDA NA MANUTENÇÃO DE DADOS QUANDO VOCE SE MOVE DE UM CONTROLADOR PARA OUTRO CONTROLADOR. PARA MANTER OS DADOS ELE UTILZA UMA VARIAVEL
+DE SESAÕ (INRERNAMENTE).
+USADO PARA PASSAR DADOS DE CONTROLLER PARA OUTRO CONTROLLER.
+SEMELHANTE A UMA SESSAO DE CURTA DURAÇÃO,SAUR DADOS SIMPLES.
+
+
+############################################################################
+AULA  47 - exibindo detalhes dpo lanche do pedido na paginaChecoutCompleto
+############################################################################
+chmando a view:  return View("~/Views/Pedido/ChekoutCompleto.cshtml",pedido);
+
+###############################################################
+AULA  48 - IMPLEMENTANDO A AUTENTICAÇÃO E AUTORIZAÇÃO
+PODEMO CRIAR UMA TEMPLATE
+###################################################################
+
+--AUTENTICAÇÃO => VERIFICAÇÃO DE UMA IDENTIDADE FEITA PELA COMPARAÇÃO DAS CREDENCIAS APRESENTADAS COM OUTRAS PRE´DEFINIDAS;  (QUEM É)
+--AUTORIZAÇÃO =>OCORRE APÓS A "AUTENTICAÇÃO" E PERMITE ATRIBUIR E DEFINIR  PRIVILEGIOS AO SUJEITO AUTENTICADO.
+TEM HAVER COM "O QUE O USUÁRIO PODE FAZER."
+
+
+DICAS: AO CLIAR PORJETO ESCOLHEMOS O "CHANGE  AUTHENTICAITION"
+E SELECIONAR A OPÇÃO  "INDIVIDUAL USAR ACCOUNTS"
 
 
 
+###############################################################
+AULA  49   - USANDO O IDENTITY
+###################################################################
+
+-IDENTITY => SISTEMA DE ASSOCIAÇÃO QUE PERMITE REGISTRAR USUAIO E CRIAR CONTA PARA O LOGIN.
+PACOTE NECESSARIOS: PRESENTES EM : NUGET-> MICROSOFT.ASPNETCORE.ALL
+ MICROSOFT.ASPNETCORE., MICROSOFT.ASPNETCORE.IDENTITY.IDENTITYFRAMEWORKCORE
+
+
+-MUDAR A CLASSE DE CONTEXTO
+DE: AppDbContext : DbContext 
+PARA:
+AppDbContext : IdentityDbContext<IdentityUser> 
+
+-CONFIGURAR O SERVIÇO:
+ NO METODO CONFIGUREsERVICES INCLUO OS NOVOS SERVIÇOS.
+ 
+-- MIGRATION
+usado para clicar as novas tabelas par controle de usuarios.
+
+###############################################################
+AULA  50 - Implementando o Login
+###############################################################
+
+-- criação do LoginViewModel.
+-- criação do controller
 
 
 
+###############################################################
+AULA  51 - Implementando o Registro
+###############################################################
+
+- CRIAR METODO ACTION REGISTER (GET/POST)
+- USAR O FILTRO "VALIDATEANTIFORGERYTOKEN"  - PRA EIVTAR ATAQUE
+- CRIAR UM METODO ACTION LOGOUT (HTTTPOST)
+
+ex:
+
+[HttpPost]
+[ValidateAntiForgeryToken]   // esse filtro indica que para executar esse metodo precisa ser autenticado com um token valido.
+public async Task<IActionResult>Register(LoginViewModel registeVM)
+{
+	comandos...
+}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+###################################################################
+AULA  52 -continuando implementação craindo views  login/register
+###################################################################
 
 
 

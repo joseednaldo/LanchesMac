@@ -4,6 +4,7 @@ using LanchesMac.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,18 @@ namespace LanchesMac
             services.AddControllersWithViews();
             // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("base")));
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Util.GetConnectionString("base")));
+
+
+            /// <summary>
+            // configurando o serviço de identificação de usuario 
+            // passando o contexto da aplicação
+            /// </summary>
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+            
+
 
             //Registrando como serviço minhas interfaces pra ser usado nos controles... 
             //specified = especificado  / transient = transitorio
@@ -57,6 +70,12 @@ namespace LanchesMac
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+
+            /// <summary>
+            // Habilitando o dientity
+            /// </summary>
+            app.UseAuthentication();
+
             app.UseRouting();
 
             app.UseAuthorization();

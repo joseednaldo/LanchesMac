@@ -1,4 +1,6 @@
 ﻿using LanchesMac.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace LanchesMac.Context
 {
-    public class AppDbContext : DbContext
+
+    //Mudamos o contexto para herda  de IdentityDbContext com a classe que vai gerenciar os usuarios e criar as tabelas e
+    //fazer o  gerenciamento.
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options ): base(options)
         {}

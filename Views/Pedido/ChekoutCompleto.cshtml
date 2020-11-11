@@ -1,8 +1,31 @@
-﻿<br />
+﻿<!-- tipaddando a vire-->>
+@model Pedido
+<br />
+<br />
 
 <div class="container">
     <div class="jumbotron">
         <h2>@ViewBag.ChekoutCompletoMensagem</h2>
+        <div class="card">
+            <div class="card-body">
+                <p>Cliente:  <strong>@Model.Nome</strong> </p>
+                <br />
+                <p>Data do Pedido:  <strong>@Model.PedidoEnviado</strong> </p>
+                <br />
+                <p>Número do Pedido: <strong>@Model.PedidoId</strong></p>
+                <br />
+                @foreach (var item in @Model.PedidoItens)
+                {
+
+                    <img src="@item.Lanche.ImagemUrl" alt="Alternate Text" width="40" height="40" />
+                    <ul>@item.Quantidade</ul>
+                    <ul>@item.Preco</ul>
+                    <ul>@item.Quantidade</ul>
+                }
+            <p>Valor total do Pedido: <strong>@(((decimal)ViewBag.TotalPedido).ToString("c4"))</strong></p>
+            </div>
+        </div>
+
     </div>
     
 </div>

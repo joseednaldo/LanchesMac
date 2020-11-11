@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+
+<!--
+
+    usando injecção de dependencia,
+    estou utilizando o serviço IdentityUser.
+    motivo:Usando a instancia da classe  "IdentityUser" pra saber se o usuario esta logado ou não.
+
+-->
+@inject SignInManager<IdentityUser> SignInManager
+<!--Se o usuario estiver logado o link pra fazer logout -->
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
+          method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    </form>
+}
+
+else
+{
+    <!--Se o usuario não estiver logado   mostramos o link pra registrar e fazer login-->
+    <ul class="nav navbar-nav navbar-right">
+        <li><a id="registerLink" asp-controller="Account" asp-action="Register"> Registrar </a></li>
+        <li><a id="loginLink" asp-controller="Account" asp-action="Login"> Log in </a></li>
+    </ul>
+}

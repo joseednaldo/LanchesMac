@@ -1,5 +1,6 @@
 ﻿using LanchesMac.Models;
 using LanchesMac.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LanchesMac.Controllers
@@ -15,7 +16,7 @@ namespace LanchesMac.Controllers
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
         }
-
+        
         public IActionResult Chekout()
         {
             return View();
@@ -27,7 +28,7 @@ namespace LanchesMac.Controllers
             var itens = _carrinhoCompra.GetCarrinhoCompraItens();
             _carrinhoCompra.CarrinhoCompraItens = itens;
 
-            if(_carrinhoCompra.CarrinhoCompraItens.Count == 0)
+            if (_carrinhoCompra.CarrinhoCompraItens.Count == 0)
             {
                 ModelState.AddModelError("", "Seu carrinho  esta vazio, inclua um lanche...");
             }
@@ -36,13 +37,28 @@ namespace LanchesMac.Controllers
             {
                 _pedidoRepository.CriarPedido(pedido);
                 _carrinhoCompra.LimparCarrinho();
-                return RedirectToAction("ChekoutCompleto");
+
+                //TempData["Cliente"] = pedido.Nome;
+                //TempData["NumeroPedido"] = pedido.PedidoId;
+
+                //TempData["DataPedido"] = pedido.PedidoEnviado;
+                ViewBag["TotalPedido"] = _carrinhoCompra.GetCarrinhoCompraTotal();
+
+
+                _carrinhoCompra.LimparCarrinho();
+                return View("~/Views/Pedido/ChekoutCompleto.cshtml",pedido);
             }
             return View(pedido);
         }
 
         public IActionResult ChekoutCompleto()
         {
+
+            ViewBag.Cliente = TempData["Cliente"];
+            ViewBag.NumeroPedido = TempData["NumeroPedido"];
+            ViewBag.DataPedido = TempData["DataPedido"];
+            ViewBag.TotalPedido = TempData["TotalPedido"];
+
             ViewBag.ChekoutCompletoMensagem = "Obrigado pelo seu pedido :";
             return View();
         }
