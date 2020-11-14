@@ -72,7 +72,7 @@ namespace LanchesMac.Controllers
         
 
         [HttpPost]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [ValidateAntiForgeryToken] //Esse FILTRO indica que para executar esse metodo precisa ser autenticado com um token valido. EVITA ATAQUE DO TIPO CSRF
         public async Task<IActionResult>Register(LoginViewModel registeVM)
         {
@@ -89,6 +89,9 @@ namespace LanchesMac.Controllers
 
                 if (resultado.Succeeded)
                 {
+                    //Adiciona  o usuário padrão ao perfil Member
+                    await _useManager.AddToRoleAsync(user, "Member");
+                    await _signInManager.SignInAsync(user,isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
             }

@@ -38,7 +38,9 @@ namespace LanchesMac
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
-            
+
+            //serviço par acesso negado.
+            services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Home/AcessDanied");
 
 
             //Registrando como serviço minhas interfaces pra ser usado nos controles... 

@@ -25,9 +25,20 @@
                         @await Component.InvokeAsync("CategoriaMenu");
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">
-                            Contato</a>
+                                Contato
+                            </a>
                         </li>
-                        @await Component.InvokeAsync("CarrinhoCompraResumo");
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        }
+
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @await Component.InvokeAsync("CarrinhoCompraResumo");
+                        }
+
 
                     </ul>
 

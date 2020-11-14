@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace LanchesMac.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    // [Authorize(Roles = "Admin")]
+    //[Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminCategoriasController : Controller
     {
         private readonly AppDbContext _context;
