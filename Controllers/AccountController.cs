@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LanchesMac.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LanchesMac.Controllers
 {
+
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _useManager;
@@ -69,6 +72,7 @@ namespace LanchesMac.Controllers
         
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken] //Esse FILTRO indica que para executar esse metodo precisa ser autenticado com um token valido. EVITA ATAQUE DO TIPO CSRF
         public async Task<IActionResult>Register(LoginViewModel registeVM)
         {

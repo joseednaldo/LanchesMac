@@ -47,7 +47,13 @@ namespace LanchesMac
             services.AddTransient<ILancheRepository, LancheRepository>();
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma única vez... ou seja todas as chamadas "requisições" obtém o mesmo objeto.
+
+            //cria um objeto Scoped, ou seja um objeto que esta associado a requisição
+            //isso significa que se duas pessoas solicitarem o objeto CarrinhoCompra ao  mesmo tempo
+            //elas vão obter instâncias diferentes
             services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
+           
+            
             services.AddMemoryCache();
             services.AddSession();
             //services.AddMvc();  eu nao tinha

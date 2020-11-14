@@ -16,13 +16,15 @@ namespace LanchesMac.Controllers
             _pedidoRepository = pedidoRepository;
             _carrinhoCompra = carrinhoCompra;
         }
-        
+
+        [Authorize]
         public IActionResult Chekout()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Chekout(Pedido pedido)
         {
             var itens = _carrinhoCompra.GetCarrinhoCompraItens();

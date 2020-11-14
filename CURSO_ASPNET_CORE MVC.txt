@@ -743,6 +743,9 @@ AULA  47 - exibindo detalhes dpo lanche do pedido na paginaChecoutCompleto
 ############################################################################
 chmando a view:  return View("~/Views/Pedido/ChekoutCompleto.cshtml",pedido);
 
+
+
+SEÇÃO 6:AUTENTICACAO E AUTORIZACAO - IDENTITY
 ###############################################################
 AULA  48 - IMPLEMENTANDO A AUTENTICAÇÃO E AUTORIZAÇÃO
 PODEMO CRIAR UMA TEMPLATE
@@ -795,8 +798,10 @@ AULA  51 - Implementando o Registro
 - USAR O FILTRO "VALIDATEANTIFORGERYTOKEN"  - PRA EIVTAR ATAQUE
 - CRIAR UM METODO ACTION LOGOUT (HTTTPOST)
 
-ex:
-
+ex: metodo
+As palavras-chave async e await em C# são a parte central da programação assíncrona.
+A programação assíncrona é um poderoso recurso da linguagem C# que permite que você continue com a execução do seu programa na thread principal enquanto uma tarefa de 
+longa duração é executada na sua própria thread separadamente da thread principal.
 [HttpPost]
 [ValidateAntiForgeryToken]   // esse filtro indica que para executar esse metodo precisa ser autenticado com um token valido.
 public async Task<IActionResult>Register(LoginViewModel registeVM)
@@ -807,29 +812,289 @@ public async Task<IActionResult>Register(LoginViewModel registeVM)
 
 
 ###################################################################
-AULA  52 -continuando implementação craindo views  login/register
+AULA  52 -CRIANDOAS VIEWS LOGIN/REGISTER
 ###################################################################
 
+1-CRIAR A VIEW LOGIN.CSHTML
+2-CRIAR A VIEW REGISTER.CSHTML
+-CRIAR A VIEW LOGOUT.CSHTML
+4-CRIAR A PARTIAL VIRE _LOGINPARTIAL.CSHTML
+5-AJUSTAR O CODIGO NO ARQUIVO _LAYOUT.CSHMTL
+
+Moncerra2011A
+<!--
+
+    usando injecção de dependencia,
+    estou utilizando o serviço IdentityUser.
+    motivo:Usando a instancia da classe  "IdentityUser" pra saber se o usuario esta logado ou não.
+
+-->
+@inject SignInManager<IdentityUser> SignInManager
 
 
 
 
 
+############################################
+AULA  53 - IMPLEMENTANDO AUTORIZAÇÃO
+############################################
+
+EXEMPLO 1 : VIA CODIGO NO CONTROLADOR.
+-PARA COLOCAR AUTENTICACAO NA CONTROLER.
+OU SEJA O USUARIO SÓ CONSEGUE VER A PAGINA CASO ELE ENTRE NO SISTEMA.
+
+-AUTENTICANDO A CONTROLER CONTATOS.
+PUBLIC CLASS CONTATOCONTROLLER : CONTROLLER
+{
+	PUBLIC IACTIONRESULT INDEX()
+	{
+		IF (USER.IDENTITY.ISAUTHENTICATED)  // AUTENTUCANDO CONTROLLER.
+		{
+			RETURN VIEW();
+		}
+
+		RETURN REDIRECTTOACTION("LOGIN","ACCOUNT");
+		
+	}
+}
+-ESSE CONTROLE SO PODE SER ACESSADO SE O USUARIO LOGOU NO SISTEMA.
+
+EXEMPLO 2 : VIA CODIGO NO CONTROLADOR.	
+-PODEMOS USAR O O ATRIBUTO AUTHORIZE DO NAMESPACE: Microsoft.AspNerCore.Autorization
+AUTHORIZE = PERMITE ACESSO SOMENTE A USUARIOS AUTENTICADOS (USADO NAS "CONTROLLERS" E "ACTIONS")
+
+NOTATION
+[Authorize]  				= Verifica somente se o usuario esta autenticado.
+[Autorize(Roles="Admin")]	=Verifica somente se o usuario esta autenticado e pertence a o perfil Admin
+
+
+
+--PERMITIR ACESSO ANONIMO USANDOO ATRIBUTO ALLOWANONIMOUS.
+AllowAnonymous - permite acesso a usaurios não autorizados.
+[AllowAnonymous]
+
+OBS: PODEMOS USALOS EM ALGUM CONROLER QUE TAMBÉM TENHA P Authorize.
+
+
+O QUE PRECISAMOS FAZER:
+1-O QUE O USAURIOS ANONIMOS PODERÃO ACESSAR.
+--AS PAGINAS DE LANCHE NORMAL E NATURAL
+2-A  PAGINA TODOS OS LANCHES
+3-A APAGINA PRINCIPAL
+4-A PAGINA DE CONTRATO
+
+
+O QUE SOMENTE USUARIOS AUTENTICADOS PODERÃO ACESSAR.
+-FAZER A CONFIRMAÇAÕ DO PEDIDO
+-INCLUIR UM ITEM NO CARRINHO
+-REMOVER UM ITEM DO CARRINHO
+
+
+
+###########################################
+AUKA 54 - Seção 7:Área de Administração
+##########################################
+UMA ÁREA PODE SER DEFINIDA COMO UNIDADES FUNCIONAIS MENORES EM UM PROJETO
+ASPNETCORE MVC COM SEU PROPRIO COMNUNTO DE CONTROLES , VIWES E MODELOS.
+"QUANDO USAR"
+SE SUA APLICAÇÃO FOR COMPOSTA DE MULTIPLOS COMPONENTES FUNCIONAIS DE ALTO NIVEL QUE DEVEM SER SEPARADAS LOGICAMENTE.
+
+-SE VOCE DESEJA PARTICIPAR SEU MVC PAA QUE CADA FUNCIONAL POSSA SER TRABALHADA DE FORMA INDEPENDENTE.
+
+== CARACTERISTICAS DAS AREAS
+->UM APLICATIVO ASPNETCORE MVC PODE TER QUALQUER NUMEROS DE AREAS.
+-> CADA AREA POSSUI SEUS PROPRIOS "CONTROALDORES",""MODLEOS" E VIEWS.
+-> PERMITE ORGANIZAR GRANDES PROJETOS MVC EM MULTIPLOS COMPONENETES DE ALTO NIVEL QUE PODEM SER TRABALHADOS  DE FORMA INDEPENDENTE.
+->SUPORTA MULTIPLOES CONTROLADORES COM O MESMO NOME - DESDE QUE TENAM AREAS DIFERENTES.
+
+
+### EXMPLO DE ESTRUTURA DE UM PROJETO MVC COM ÁREAS.
+
+NOME_PROJETO
+AREAS
+  - PRODUTOS
+      CONTROLLERS
+	     HOMECONTROLLER.CS
+		 MANAGECONTROLLER.CS
+	  VIEWS
+		HOME.CS
+		   INDEX.CSHTML
+		MANAGE
+			INDEX.CSHTML
+    SERVICES
+		CONTROLLERS
+		   HOMECONTROLES
+		VIEWS
+			HOME
+			INDEX.CSHTML
+
+
+
+=> O PROJETO CONTÉM
+A AREA "PRODUTOS"
+		CONTROLLERS
+		VIEWS
+A AREA  "SERVICES"
+		CONTROLLERS
+		VIEWS
+
+
+
+=> DECLARAR QUE UM CONTROLADOR É DE UM DETERMINADA AREA.
+
+EX:
+
+[AREA("PRODUTOS")]
+
+PUBLIC CLASS HOMECONTROLLER : CONTROLLER 
+{....}
+
+OU SEJA O HOMECONTROLLER ESTA A "AREA" PRODUTOS.
+
+DICAS:
+PASSO 1 = DEFINIR A HERARQUIA DE PASTAS.
+PASSO 2 = DIZER AO MVC QUAL AREA  CADA CONTROLADOR PERTENCE.
+PASSO 3 =DEPOIS DEFINIR A ROTA  => areaRouter
+
+ex:
+app.UseMvc(routers =>
+{
+	routes.MapRoute(name: "areaRoute",
+	template:"{area:exists}/{controller=Home}/{action=Index}");
+});
+
+
+=>GERANDO LINKS PARA ÁREAS <=
+<A ASP.AREA="" ASP-CONTROLER="HOME", ASP-ACTION="INDEX">
+</A>
+
+exemplo real com areas:
+<A ASP.AREA="Produtos" ASP-CONTROLER="HOME", ASP-ACTION="INDEX">
+Produtos
+</A>
+
+Exemplo:
+@html.ActionLink("Produtos","Index","Home" , new {area = "Produtos"})
+
+
+
+##########################################################
+AULA 55 - USANDO AREAS : CRIANDO UMA ÁREA ADMINISTRAÇÃO
+##########################################################
+
+--DEFININDO UM AREA ADMIM COM CONTORLADORES E VIEWS
+--PARA GERENCIAR OS LANCHES , CATEGORIAS E PEDIDOS
+--DEFINIR A ROTA NO ARQUIVO Startup
+-DEFINI NOVO LAYOUT.
+
+
+:: PASTA VIEW ::
+CRIAMOS DOIS ARQUIVOS 
+1- RAZOE VIEW START (_ViewStart.cshtml)
+ - AQUI DEFINI O LAYOUT QUE VAMOS USAR, POSSO USAR O QUE JA EXISTE MAS PRECISO COLOCAR O CAMINHO DO ARQUIVO COMPLETO.
+EX:"_Layout" COLOCAR O CAMINHO COMPLETO DE OUTRO LAYOUR CASO EU QUEIRA USA-LO.
+@{
+    Layout = "_Layout";
+}
+
+2- RAZOR VIEW IMPORTS (_ViewImports.cshtml)
+-- COPIO E COLO O MESMO CONTEUDO DO "_ViewImports.cshtml"  QUE FOI CRIANDO NO PROJETO 
+PRINCIPAL.
+
+:: CRIANDO AREA  NO ARQUIVO STARTUP:: 
+PARA FUNCIONAR PRECISO CRIAR UM ROTA DA AREA.
+
+:: CRIANDO   ::
+CONTROLE PASTA   	= Admin
+INDEX E SUA VIEW   	= Pasta View
+
+:: CRIANDO UM PAGINA DE LAYOUT.
+ADDIONAT O ITEM "RAZOR LAYOUT"
 
 
 
 
+##########################################################
+AULA 56 - ÁREA ADMINISTRAÇÃO: GERENCIANDO PEDIDOS,LANCHES
+CATEGORIA
+##########################################################
+
+:: CRIANDO OS CONTROLES
+VAMOS USAR O SCAFOLDER = MVC CONTROLLERS WITH VIEWS, USING ENTITY FRAMEWORK.
+
+AdminCategoriasController
+
+
+
+##########################################################
+AULA 57 - AJUSTE DE SEGURANÇA - 1
+CURSO ASP NET CORE MVC
+##########################################################
+
+CORRIGINDO PROBLEMAS DE SEGURANÇA:
+1-QUALQUER USUARIO QUE ESTEJA LOGADO PODE ACESSAR A AREA DE ADMINISTRAÇÃO
+2-AO FAZER LOGOFF O CARRINHO DE COMPRAS DO USUARIO CONTINUA A SER EXIBIDO , E ELE PODE ACESAR MEMSO NAO ESTANDO LOGADO.
+
+
+:: SOLUÇÃO DO PROBLEMA 1 ::
+1-VAMOS CRIAR PERFIS(ROLES) DE USUARIOS E ATRIBUIR OS PERFIS AOS USUARIOS.
+  - CRIAR DOIS PERFIS (ROLES): Admin  e Member (tabela usuada: AspNetRoles)  - cadsastro de perfis ex: Admin , coordenador etc..
+-O PERFIL "Admin" será atribuido ao usuario "administrador" na inicialização da aplicação quando sua criação. (tabela: AspNetUserRoles) / usuarios e regras
+
+-O PERFIL "MEMBER" SERÁ ATRIBUIDO A TODOS OS USUARIOS QUANDO FIZERAM O REGISTRO (TABELA: AspNetUserRoles)
+
+
+:: APOS TODO PROCESSO ACIMA ::
+VAMOS USAR =>[Authorize(Roles = "Admin")]
+
+- SOMENTE PODERÃO ACESSAR A AREA ADMINISTRATIVA OS USUARIOS COM O PERFIL IGUAL A "ADMIM"
+
+O QUE PRECISAMOS FAZER DEPOIS: 
+- NOS CONTROLADORES VAMOS APLICAR O [Authorize(Roles = "Admin")] TODOS DA AREA ADMIN.
+
+
+::  DEFININDO CLASSE DE PERFILS   OU SEJA CRIAR A CLASSE "SeedData"
+
+-DEFINIR OS PERFIS A SEREM CRIADOS :Admin, Member e Financeiro
+-criar os perfils caso nao exista
+-criar um superusuario com base em dados obtidos no arquivo    "appsettings.json"
+-atribuir o perfil "admin" ao superusuario (poweruser)
+
+
+:: QUANDO VAMOS CHMAR A CLASSE SEEDDATA  ? ::
+-VAMOS CHAMAR A CLASSE SEEDDATA NA INICIALIZAÇÃO DA APP.
+OU SEJA ESSA AÇÃO SO VAI OCORRER UM UNICA VEZ.
+--  FAZER A CHAMADA NA CLASSE  PROGRAM.CS
+
+-- INCLUIR LINK "ADMIN" NO MENU EXIBINDO SOMENTE PARA USUARIOS COM PERFIS A "ADMIM"  (ARQUIVO : _LOUYOUT.CSHTML)
+
+VAMOS USARR:
+@IF(uSER.ISINROLE("admin")){
+
+	mostra o link admin no menu
+}
+
+
+
+:: SOLUÇÃO DO PROBLEMA 2 ::
+
+- VAMOS EXIBIR O CARRINHO DE COMPRA SOMENTE PARA OS USUARIOS QUE ESTIVEREM "AUTENTICACADO"
+(ARQUIVO: _LAYOUT.CSHTML)
+
+
+
+:: CRIAR TELA PADRÃO PRA USUARIO QUE NAO TEM PERMISSAO ::
+
+-CRIAR UM METODO ACTION "ACCESS DANIED" EM HOMECONTROLLER
+-CRIAR O METODO ACTION E SUA RESPECTIVA VIEW PARA EXIBIR MENSAGEM AOS USUARIOS QUE NAO TEM PERMISSÃO DE ADMINISTRADOR E TENTAM ACESSAR A AREA "ADMIN"
 
 
 
 
-
-
-
-
-
-
-
+##########################################################
+AULA 57 - AJUSTE DE SEGURANÇA - 2
+CURSO ASP NET CORE MVC
+##########################################################
 
 
 
