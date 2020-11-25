@@ -1,3 +1,4 @@
+using LanchesMac.Areas.Admin.Servicos;
 using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repositories;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReflectionIT.Mvc.Paging;
 
 namespace LanchesMac
 {
@@ -50,11 +52,24 @@ namespace LanchesMac
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();   //=> AddSingleton   => é instanciado uma única vez... ou seja todas as chamadas "requisições" obtém o mesmo objeto.
 
+
+            //cria um objeto Scoped, ou seja um objeto que esta associado a requisição
+            //isso significa que se duas pessoas solicitarem o objeto RelatorioVendasService ao  mesmo tempo
+            //elas vão obter instâncias diferentes
+            services.AddScoped<RelatorioVendasService>();
+
             //cria um objeto Scoped, ou seja um objeto que esta associado a requisição
             //isso significa que se duas pessoas solicitarem o objeto CarrinhoCompra ao  mesmo tempo
             //elas vão obter instâncias diferentes
             services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));             //=> é criado instancia diferentes do objeto pra cada requisição...
-           
+
+
+            //Configurando pagina com pacote de terceiros.
+            services.AddPaging(options =>
+            {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageindex";
+            });
             
             services.AddMemoryCache();
             services.AddSession();

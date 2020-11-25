@@ -156,6 +156,29 @@ namespace LanchesMac.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult PedidoLanhce(int? id)
+        {
+            var pedido = _context.Pedidos
+                                        .Include(pd => pd.PedidoItens)
+                                        .ThenInclude(l => l.Lanche)
+                                        .FirstOrDefault(p=>p.PedidoId == id);
+                
+            if(pedido == null)
+            {
+                Response.StatusCode = 404;
+                return View("PedidosNotFound", id.Value);
+            }
+
+            ViewModels.PedidoLancheViewModel pedidoLanches = new ViewModels.PedidoLancheViewModel()
+            {
+                Pedido = pedido,
+                PedidoDetalhes = pedido.PedidoItens
+            };
+
+            return View(pedidoLanches);
+
+        }
+
         private bool LancheExists(int id)
         {
             return _context.Lanches.Any(e => e.LancheId == id);

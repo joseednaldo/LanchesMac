@@ -2,6 +2,7 @@
 using LanchesMac.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace LanchesMac.Controllers
 {
@@ -27,29 +28,42 @@ namespace LanchesMac.Controllers
         [Authorize]
         public IActionResult Chekout(Pedido pedido)
         {
-            var itens = _carrinhoCompra.GetCarrinhoCompraItens();
+            decimal precoTotalPedido = 0.0m;
+            int totalItensPedido = 0;
+
+            List<CarrinhoCompraItem> itens = _carrinhoCompra.GetCarrinhoCompraItens();
             _carrinhoCompra.CarrinhoCompraItens = itens;
 
+            //verifica se existem itens de pedidos
             if (_carrinhoCompra.CarrinhoCompraItens.Count == 0)
             {
                 ModelState.AddModelError("", "Seu carrinho  esta vazio, inclua um lanche...");
             }
+            //calcula o total do pedido
+            foreach (var item in itens)
+            {
+                totalItensPedido +=item.Quantidade;
+                precoTotalPedido += (item.Lanche.Preco * item.Quantidade);
+            }
+
+            //atribuindo o total de itens do pedido
+            pedido.TotalItensPedido = totalItensPedido;
+
+            //atribui o total do pedidod ao pedido
+            pedido.PedidoTotal = precoTotalPedido;
+
 
             if (ModelState.IsValid)
             {
                 _pedidoRepository.CriarPedido(pedido);
-                _carrinhoCompra.LimparCarrinho();
 
-                //TempData["Cliente"] = pedido.Nome;
-                //TempData["NumeroPedido"] = pedido.PedidoId;
-
-                //TempData["DataPedido"] = pedido.PedidoEnviado;
-                ViewBag["TotalPedido"] = _carrinhoCompra.GetCarrinhoCompraTotal();
-
+                ViewBag.TotalPedido = _carrinhoCompra.GetCarrinhoCompraTotal();
+                ViewBag.CheckoutCompletoMensagem = "Obrigado pelo seu pedido :) ";
 
                 _carrinhoCompra.LimparCarrinho();
-                return View("~/Views/Pedido/ChekoutCompleto.cshtml",pedido);
+                return View("~/Views/Pedido/CheckoutCompleto.cshtml", pedido);
             }
+
             return View(pedido);
         }
 

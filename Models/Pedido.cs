@@ -71,6 +71,10 @@ namespace LanchesMac.Models
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? PedidoEntregueEm { get; set; }
 
+        [BindNever]//nao vai vincular a coluna
+        [ScaffoldColumn(false)]  // não vai aparecer no Scaffold
+        [Display(Name = "Itens no Pedido")]
+        public int TotalItensPedido { get; set; }
 
     }
 }

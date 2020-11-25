@@ -1,6 +1,26 @@
 #######################
 CURSO UDEMY
 #######################
+
+:: Descrição ::
+Este curso apresenta os principais conceitos da ASP .NET Core MVC aplicados na criação de um site para vendas de
+lanches funcional. Você vai criar do zero um site web dinâmico e aprender diversos conceitos relacionados ao desenvolvimento web usando 
+a tecnologia ASP .NET Core MVC e o Entity Framework Core.
+
+Com os conceitos aprendidos você estará apto a criar seus próprios sites usando os principais recursos da 
+ASP .NET Core MVC a tecnologia mais moderna e atual da Microsoft para desenvolvimento web.
+
+
+:: O que você aprenderá :: 
+Ao final do curso os alunos terão os conhecimentos necessários sobre ASP .NET Core MVC e Entity Framework Core para criar web sites
+
+
+
+
+
+
+
+
 launchSettings.json   	= configração do localhost
 appsettings.json  		= arquivo de configuracao , seria o equivalente ao web.config, connectionString do banco de dados.
 Program.cs  			= inicializa a aplicação onde é feita a configuração do host / servidor.
@@ -132,7 +152,7 @@ Gerencia o versionamento do banco de dados.
 
 Métodos:
 add-migration nome_migração        - cria script
-update database       			   - aplica o script no sqlserver (banco)
+update-database     			   - aplica o script no sqlserver (banco)
 remove-MIGRATION 					= desfazer a ação feita.
 
 
@@ -239,15 +259,15 @@ IActionResult  = RETORNA UM ActionResult  QUE PODE SER UMA ViewREsult, pode ser 
 ######################################################################
 O QUE SIGNIFICA=>
 @model IEnumerable<LanchesMac.Models.Lanche>
-@model = Ultilizada para especificar o tipo que vamos usar na view.
-No caso acima fala que esotu usando uma lista do tipo "lanches".
+@model = Ultilizada para especificar o tipo  que vamos usar na view ou seja o modelo de dados.
+No caso acima fala que esotu usando uma lista do tipo "lanches" ou seja estou usando o modelo/tabela/class lanche
 Outro exemplo de uso:
 @using LanchesMac.Models
 @model IEnumerable<Lanche>
 
-@model => é apenas a diretiva que aponta para o tipo lanche.
+@model => é apenas a diretiva que aponta para o "tipo lanche" ou seja aponta para o "modelo" que vou usa.
 Model  => é ultilizada apenas para acessar o tipo que é passada na view.
-Ou seja permiti acesso ao "a lista do tipo lanche". è a properidade que acessa o tipo.
+Ou seja permiti acesso ao "a lista do tipo lanche". è a propriedadeidade que acessa o tipo.
 
 ############################################################################
 	AULA 23 QUAL O PAPEL DOS ARQUIVOS _ViweStart,_ViewImports e o BOOTSTRAP
@@ -264,7 +284,7 @@ _ViweStart = È Através do _ViweStart que => as views sabe qual é o "arquivo d
 _ViweImports.cshtml =   O objetivo dele é conter todas as referenças e import comum em todas as "VIEWS"
 Ex:
 @using LanchesMac   		= referencia o projeto 
-@using LanchesMac.Models 	= referencia a model 
+@using LanchesMac.Models 	= referencia a model   (posso tirar das views o using lanhesMec.Model)
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers  = significa que a ultilização das tags helper estão habilitadas.
 
 ############################################################################
@@ -305,7 +325,7 @@ desacoplar.
 
 
 ############################################################################
-	AULA 26 		PARTIAL VIEWS
+	AULA 26 		_ViewImports VIEWS
 ############################################################################
 UMA PARTIAL VIEW É UAM VIEW QUE É "RENDERIZADA" EM OUTRA => VIEW.
 ELAS SÃO USADAS PARA ENCAPSULAR A LÓGICA REUTILIZADA NAS  VIEWS
@@ -571,8 +591,9 @@ Ex: carinho de compr ou qualquer coisa que quero usar seja em varios comntrolado
 ############################################################
 AULA 36 TAG HELPTERS
 ############################################################
-Permite qu eo código do lado do servidor partivcipe na criação e redereização de elementos html em arquivos Razor.
-Elas são uam sintaxe alternativa aos html helpers e obtém o mesmo resultado final gerando codigo html.
+Permite que o código do lado do servidor participe na criação e "redereização" de "elementos html" em arquivos Razor.
+Elas são uma sintaxe alternativa aos "html helpers" e obtém o mesmo resultado final gerando codigo html.
+paracido com html mas é processado pelo razor no servidor.
 
 
 
@@ -582,7 +603,6 @@ TAG HELPER                                  				RENDERIZADO
 <input type="text" asp-for="Nome"/>      					<input id="nome" name="nome" tyoe="text" value=""/>
 <label  asp-for="E-mail"<label/>         					<label for="Enail">E-mail</label>
 <form asp-controller="Conta" asp-action="login"</form>		<form action="/Conta/Login" method="post"> </form>
-
 
 Dicas:
 A diretiva @addTagHelper    - torna as tags helpers disponiveis para um view.
@@ -597,6 +617,7 @@ Text area tag helpers
 Validation tag helper
 Label tag helper
 Select tag helper
+asp-for,asp-controller,asp-action
 
 
 
@@ -1009,7 +1030,8 @@ CONTROLE PASTA   	= Admin
 INDEX E SUA VIEW   	= Pasta View
 
 :: CRIANDO UM PAGINA DE LAYOUT.
-ADDIONAT O ITEM "RAZOR LAYOUT"
+ADDIONAT O ITEM "RAZOR LAYOUT"    / mvc view layout page
+_LAYOUT.cshtml
 
 
 
@@ -1174,6 +1196,202 @@ DEIXAR MARCADO A OPÇÃO "CONFIGURE HTTPS"
 ###############################################################
 AULA - 64. Ajuste do método List do controlador LancheController
 ###############################################################
+
+comentado : nao tem boas praticas
+//if (string.Equals("Normal", _categoria, StringComparison.OrdinalIgnoreCase))
+//    lanches = _lancheRepository.Lanches.Where(p => p.Categoria.CategoriaNome.Equals("Normal")).OrderBy(p => p.Nome);
+//else
+//    lanches = _lancheRepository.Lanches.Where(p => p.Categoria.CategoriaNome.Equals("Natural")).OrderBy(p => p.Nome);
+
+
+--novo
+lanches = _lancheRepository.Lanches
+	   .Where(p => p.Categoria.CategoriaNome.Equals(categoria))
+	   .OrderBy(p => p.Nome);
+#########################################################################
+AULA - 65  ajuste para exibição do menu  completo no carrinho de compras
+#########################################################################
+
+USAMOS A VIEWCOMPONENTE CategoriaMenu na 
+index.cshtml do carrinho de compra para carregar a lista de todas as categorias.
+
+@await Component.InvokeAsync("CategoriaMenu");
+
+#########################################################################
+AULA - 66  roteiro para implementacao da paginação e filtro
+filtro de pedidos e lanches
+#########################################################################
+sera feita na area  administrativas
+1 opção : usando pacotes de terceiros
+
+package: reflectionIt.Mvc.Paging  - version 4.0.0
+1-implementar a paginação
+2-filtro e procura de dados.
+
+
+PASSO 1:
+1-INSTALAR PACOTE
+2- E INCLUIR O RECRUSO NO MÉTODO "CONFIGURESERVICE()"
+CONFIGURAR O ARQUIVO STATUP "CONFIGURESERVICE".
+3-no controlador vamos alterar o metodo action referente a view onde vamos implementar a paginação.
+4- NA VIEW ONDE VAMOS IMPLEMENTAR A PAGINAÇÃO , VAMOS INCLUIR @MODEL reflectionIt.Mvc.Paging.PAGINGLIST<LANCHEMAC.MODELS.LANCHE>
+ - CRIAR O FORMULA DE VAMOS COLCOAR OS PARAMETROS.
+ 
+5- NO ARQUIVO _VIEWIMPORTS.CSHTML
+ VAMOS INCLUIR (@USING REFLECTIONIT.MVC.PAGING E ADDTAGHELPER*, reflectionIt.Mvc.Paging) 
+ 
+"ASQUERYABLE" = USAMOS AS  ASQUERYABLE EM UMA CONSULTA EXISTENTE E APLICAMOS OUTRAS TRANSFORMAÇÕES , COMO APLICAR UM FILTRO OU ESPECIFICAR UMA ORDEM DE CLASSIFICAÇÃO
+ESSAS INSTRUÇÕES ÇAMBDA SÃO CONVERTIDAS EM ÁRVORES DE EXPRESSÃO
+
+
+#########################################################################
+AULA - 67 IMPLEMENTANDO A PAGINA E FILTRO
+#########################################################################
+
+- VAMOS ALTERAR AS CONTORLES DE
+PEDIDOS E LANCHES 
+VIEWS DE 
+PEDIDO E LANCHES 
+
+APENAS DA AREA ADMIN
+
+
+#########################################################################
+AULA - 68 EXIBINDO DETALHES DO PEIDOD NA AREA DE ADMINISTRAÇÃO
+#########################################################################
+PRA ISSO CRIAMOS UMA "VIEW MODEL"
+PedidoLancheViewModel PARA MOSTRA O PEDIDO E SEUS DETAHES.
+
+QUAL O PROPOSITO DE UMA VIEW MODEL?
+SERVE PARA MOSTRAR OS DADOS EM UMA VIEW DE UM OU MAIS MODELOS.
+NESSE CASO DE "PEDIDO" E "DETALHESPEDIDO"  OU SEJA 2 TABELAS 
+DIFERENTES... REPRSENTADAS EM CLASS NO MODELO ORM.
+
+#########################################################################
+AULA - 69 Relatorio de peidods por período
+#########################################################################
+--ALTERAR A ENTIDADE PEDIDO DA PAS TA MODELS
+--CRIAR NOVA PROPRIEDADE.
+--VAMOS USAR O 
+ADD-MIGRATION ItensPedido
+Update-database
+
+1-METODO CHECKOUT
+ - calcular o total do pedidod
+ -calcular o totla dos itens pedido
+ -armazenar o s valroes da tablea pedidos.
+
+2-criar pasta "Serviçoes" na area Admin.
+criar classe "relatorioVendasServico"
+  - criar o metodo FindeByDateAsync
+  
+  - temos que registrar o serviço "relatorioVendasService" no arquivo "Startup"
+  -retorno os pedidos por intervalo de datas inicial e final
+  
+ 3-criar as views
+ -Index.cshtml
+ -RelatorioVendasSimples.cshtml
+ 
+
+#########################################################################
+AULA - 70 APRESENTANDO O NET 5.0 E ROTEIRO DE MIGRAÇÃO PARA O 5.0
+#########################################################################
+
+
+O QUE O NET COTE 5.0?
+-O OBEJTIVO DO .NET CORE 5.0 É REALZIAR A UNIFICAÇÃO DO AMBIENTE .NET EM UMA ÚNICA PLATAFORMA.
+
+A IDÉIA E CRIAR UMA "BASE CLASS LIBRARY (BCL" COMPARTILHADO QUE TERA MÁQUINAS VIRTUAIS EM DE TEMPO DE EXECUÇÃO.
+-- FOI CRIADO O ".NET STANDARD LIBRARY"
+
+
+- O NET 5.0 OEFERECE SUPORTE A MAS TIPOS D EAPLICATIVOS E PLATAFORMA DO QUE O NET CORE OU .NET.
+EX: Iot, AI...
+
+			:: ROTEIRO ::
+
+1-ATUALZIAR O VS PARA VERSÃO 2019 COMMUNITY APRA VERSÃO 16.8.1 OU SUPERIOR
+2-INSTALAR O NET 5.0 SDK
+3-NO ARQUIVO DE PROJETOP ATUALIZAR O TARGETFRAMEWORK.
+TIRAR P: <TARGETFRAMEWORK>NETCOREAPP3.1</TARGETFRAMEWORK>
+COLOCAR:<TARGETFRAMEWORK>NET5.0</TARGETFRAMEWORK>
+4-ATUALIZAR OS PACOTES USADOS NO PROJETO PARA A VERSÃO 5.0
+
+
+BAIXAR:
+NET 5.0 DOWNLOAD  ()
+DOWNLOAD .NET 5.0 (LINUX,).MAC,WINDOWS)
+
+https://docs.microsoft.com/pt-br/aspnet/core/migration/31-to-50?wiew=aspnetcore-5.0&tabs=visual-studio
+
+::MELHORIAS::
+1-melhorias no model binding mvc, incluindo suporte paa tipos record do c#9
+2-suporte e melhorias no "Blazor server" e no blazor WebAssembly
+3- suporte integrado para OpenAPI e Swagger UI para WebApis.
+4-filtros de Signar HUB e invocaçãoes de hub paralelas]
+5-melhorias desempenhpo e mlehor alocação de memoria.
+6-atualização automatica do navegador com dotnet watch
+7-melhorias de desempenho no "http" e"grpc"
+...
+
+#########################################################################
+AULA - 71  MIGRAÇÃO PARA O 5.0
+NAO VOU FAZER AGORA..
+#########################################################################
+cmd
+dotnet --version
+dotnet --list-sdks
+
+O MACORATTI EM UM ARTIGO PARA MUDAR O SDK...
+
+1-ALTERAR O ARQUIVO DE PROJETO EX:
+LANCHEmAC.CSPROJ     (ESCOLHER O EDIT PROJECT FILE) PARA ABRIR O ARQUIVO.
+2- ATUALIZAR OS PRINCIPAIS PACOTES.
+
+
+
+
+
+
+######### #########  REFORÇO ########################
+
+SEÇÃO 6:AUTENTICACAO E AUTORIZACAO - IDENTITY
+
+DICAS:
+-AUTENTICAÇÃO: É A VERIFICAÇÃO DE UMA IDENTIDADE FEITA PELA COMPARAÇÃO DAS CREDENCIAS APRESENTADAS COM OUTRAS PRÉ-DEFINIDAS.
+OU SEJA SERVE PRA DIZER QUEM É O USUARIO.
+-USAMOS UM RECURSO CHAMADO IDENITY, TEMPLA JÁ PRONTO, ao escoluer o projeto clicamos em "change authentication" 
+e escolhemos a opção "individual user accounts"
+
+APOS CRIÇÃO DO PROJETO TEMOS:
+ACCOUNTCONTROLLER.CS
+MANAGERCONTROLLER.CS  =  PARA ADMINISTRAR ALTERAR SENHA/CRIAR/DESABILITAR
+
+PASTA MODELS
+VAIR SER CRIADA VIEWS ESPECIFICAS.
+EX: LOGIN
+
+PASTA DATA :
+É CRIADO UMA MIGRATION.
+PARA CRIAR AS TABELAS NO BANCO QUE SÃO NECESSARIAS.
+
+:: USANDO O IDENTITY
+
+
+
+
+-AUTORIZAÇÃO: OCORRE APÓS A AUTENTICAÇÃO E PERMITE ATRIBUIR E DEFINIR PRIVILÉGIOS AO SUJEITO AUTENTICACADO.
+OU SEJA "O QUE O USUARIO PODE FAZER NO SISTEMA"
+
+
+
+SEÇÃO 7:ÁREA DE ADMINISTRAÇÃO
+
+
+
+
+
+
 
 
 
